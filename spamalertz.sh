@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#! /bin/bash
 #################################
 # Program:  spamalertz.sh
 # Type: bash shell script

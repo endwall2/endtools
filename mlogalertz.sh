@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#! /bin/bash
 #######################################################
 # Program : mlogalertz
 # Type: bash Script

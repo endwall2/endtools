@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#! /bin/bash
 #################################################
 # Program: aloglertz.sh
 # Type: bash shell script
