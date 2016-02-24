@@ -1,16 +1,15 @@
-#! /bin/bash
+#! /bin/sh
 #################################
 # Program:  spamalertz.sh
-# Type: bash shell script
-# Version: 1.03
-# Revision Date: Feb 14 2016
+# Type: Bourne shell script
+# Version: 1.04
+# Revision Date: Feb 23 2016
 # Author: Endwall Development Team
 #
 # Description: Print log file of flagged terms
 # Notes: invoke with root privalage
 #
 # Change Log: -Fixed flags to match endset.sh
-#
 #
 # Instructions: $ chmod u+rwx spamalertz.sh
 # Examples:     $ su
@@ -19,22 +18,19 @@
 #################################
 
 ### log file locations
-
-infolog=/var/log/everything.log*
+infolog=/var/log/everything.log
 tmp1=/tmp/store1.tmp
-date
 
 ###################################
-arg1="$1"  # argument 1 from terminal
-arg2="$2"  # argument 2 from terminal
+date
 
 month="$(date +%b)" # get current month
 day="$(date +%-d)"  # get current day
 
 # if terminal values are entered set the date to those values
-if [ "$arg1 " != " " ] ; then    
-month=$arg1
-day=$arg2
+if [ "$#" -ge 2 ] ; then    
+month=$1
+day=$2
 fi
 
 # correction for if day <10 needs an extra white space
@@ -44,34 +40,34 @@ fi
 
 ###################################
 
-cat $infolog | grep -a "$(echo "$month $day")" > $tmp1
+grep -ah "$(echo "$month $day")" $infolog* > $tmp1
 
 echo ~~~~~~~~~~~~~~~~~~ BLACKLIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cat $tmp1 | grep -a "BLACKLIST"
+grep -ah "BLACKLIST" "$tmp1"
 echo 
 echo ~~~~~~~~~~~~~~~~~~ IPv6 BLACKLIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cat $tmp1 | grep -a "IPv6-BLACKLIST"
+grep -ah "IPv6-BLACKLIST" "$tmp1"
 echo 
 echo ~~~~~~~~~~~~~~~~~~ ATTACKERS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cat $tmp1 | grep -a "ATTACKER"
+grep -ah "ATTACKER" "$tmp1"
 echo 
 echo ~~~~~~~~~~~~~~~~~~~SMTP BLACKLIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cat $tmp1 | grep -a "SMTP-BL"
+grep -ah "SMTP-BL" "$tmp1"
 echo
 echo ~~~~~~~~~~~~~~~~~~ HTTP BLACKLIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cat $tmp1 | grep -a "HTTP-BL" | grep -a "DPT=80 " 
+grep -ah "HTTP-BL" "$tmp1" | grep -a "DPT=80 " 
 echo 
 echo ~~~~~~~~~~~~~~~~~~ HTTPS BLACKLIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cat $tmp1 | grep -a "HTTP-BL" | grep -a "DPT=443 "
+grep -ah "HTTP-BL" "$tmp1" | grep -a "DPT=443 "
 echo 
 echo ~~~~~~~~~~~~~~~~~~ DNS BLACKLIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cat $tmp1 | grep -a "DNS-BL"
+grep -ah "DNS-BL" "$tmp1"
 echo 
 echo ~~~~~~~~~~~~~~~~~~ EMAIL SPAM~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cat $tmp1 | grep -a "EMAIL SPAM"
+grep -ah "EMAIL SPAM" "$tmp1"
 echo 
 echo ~~~~~~~~~~~~~~~~~~ HTML SPAM~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cat $tmp1 | grep -a "HTTP SPAM"
+grep -ah "HTTP SPAM" "$tmp1"
 echo 
 
 rm $tmp1

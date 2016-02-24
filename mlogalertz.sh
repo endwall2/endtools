@@ -1,29 +1,23 @@
-#! /bin/bash
+#! /bin/sh
 #######################################################
 # Program : mlogalertz
-# Type: bash Script
+# Type: Bourne Shell Script
 # Description: Print mail log for a given day
 # Notes: Invoke with root permisions
 # Author: Endwall Development Team
-# Version: 1.03
-# Version Date: February 13 2016
+# Version: 1.04
+# Version Date: February 23 2016
 #
 #######################################################
 
 mail=/var/log/mail.log
-mail_old=/var/log/mail.log*
-
-date
-
-arg1="$1"  # get first commandline argument
-arg2="$2"  # get the second commandline argument
 
 month="$(date +%b)"  # get the current month
 day="$(date +%-d)"   # get the current day
 
-if [ "$arg1 " != " " ] ; then   # if there are cli arguments   
- month=$arg1  # set the day to first argument
- day=$arg2    # set the month to second argument 
+if [ "$#" -ge  2 ] ; then   # if there are cli arguments   
+ month=$1  # set the day to first argument
+ day=$2    # set the month to second argument 
 fi
 
 if [ "$day" -le "9" ]  # correction for day<10
@@ -31,12 +25,16 @@ then
   day=" $day"          # add a whitespace
 fi
 
-if [ "$arg1 " != " " ] ; then  
+echo "$month $day"
+if [ "$#" -ge 2 ] ; then  
   echo ~~~~~~~~~~~~~~~~~~~~~~~~MAIL LOG OLD ~~~~~~~~~~~~~~~~~~~~~~~
-  cat $mail_old | grep "$(echo "$month $day")"
+  grep -ah "$(echo "$month $day")" "$mail"* 
   echo
 else
   echo ~~~~~~~~~~~~~~~~~~~~~~~~~~MAIL LOG~~~~~~~~~~~~~~~~~~~~~~~~~
-  cat $mail | grep "$(echo "$month $day")"
+  grep -ah "$(echo "$month $day")" "$mail"
   echo
 fi
+
+date
+exit 0
