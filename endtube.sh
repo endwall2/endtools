@@ -1,5 +1,5 @@
 # /bin/sh
-#################################################################################################################################################################
+#################################################################################################################################################
 # NAME: endtube.sh
 # TYPE: BOURNE SHELL SCRIPT
 # DESCRIPTION: Downlods youtube video files from an input list 
@@ -8,7 +8,7 @@
 # AUTHOR:  ENDWALL DEVELOPEMENT TEAM
 # CREATION DATE:   APRIL 9 2016
 # VERSION: 0.02
-# REVISION DATE: APRIL 16 2015
+# REVISION DATE: APRIL 17 2015
 #
 # DEPENDANCIES: torsocks,youtube-dl,calc,od,head,urandom,sleep
 #
@@ -25,7 +25,8 @@
 #  $  cd videos
 #  $  cp youtube_links.txt ~/downloads/videos
 #  $  endtube youtube_links.txt
-####################################################################################################################################################################
+#
+##################################################################################################################################################
 ##############################################################################################################################################################################
 #                               LICENSE AGREEMENT  
 ##############################################################################################################################################################################
@@ -105,21 +106,29 @@
 list_nonsorted=$1
 
 # randomly sort this list
-
 sort -R $list_nonsorted > temp.srt
 
 list=temp.srt
 
 for link in $(cat "$list" ); do  
 
+# pick a random user agent
+n=$( calc $(head -c2 /dev/urandom | od -A n -i) % 4 | awk '{print $1}')
+# set the user agent
+#echo "$n"
+UA="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:4$n.0) Gecko/20100101 Firefox/4$n.0"
+echo "$UA"
+
 # generate a random number time delay
 delay=$(calc 10+$(head -c 2 /dev/urandom | od -A n -i) % 120)
-echo "Delaying download for"$delay"seconds"
-# wait by delay
-sleep "$delay"
-# initiate download
-torsocks youtube-dl "$link" 
-done
 
+echo "Delaying download for "$delay" seconds"
+# wait by delay time
+sleep "$delay"
+echo "Downloading "$link""
+# initiate download and change user agent
+torsocks youtube-dl --user-agent "$UA" "$link" 
+done
 # sometimes the download cuts off so don't delete the file until its all done
 rm "$list"
+ 
