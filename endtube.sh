@@ -1,6 +1,6 @@
 # /bin/sh
 #################################################################################################################################################
-# NAME: endtube_p.sh
+# NAME: endtube.sh
 # TYPE: BOURNE SHELL SCRIPT
 # DESCRIPTION: Downlods youtube video files from an input video url list
 #              and an input proxy url list, by randomizing lists and  
@@ -8,12 +8,19 @@
 #
 # AUTHOR:  ENDWALL DEVELOPEMENT TEAM
 # CREATION DATE:   APRIL 9 2016
-# VERSION: 0.06
+# VERSION: 0.07
 # REVISION DATE: APRIL 19 2015
 #
 # DEPENDANCIES: torsocks,youtube-dl,od,head,urandom,sleep
 #
-# INSTRUCTIONS:  do the following at a command prompt
+# CHANGE LOG:  - fixed instructions
+#
+#
+#
+##########################################################################################################################################################
+#                                        INSTRUCTIONS:  
+########################################################################################################################################################
+#  Do the following at a command prompt
 #
 #  $  mkdir ~/bin
 #  $  chmod u+wrx endtube.sh
@@ -21,14 +28,27 @@
 #  $  export PATH=$PATH:~/bin
 #  $  sudo systemctl start tor
 #  $  sudo systemctl status tor
-#  $  cd downloads
+#  $  cd Downloads
 #  $  mkdir videos
 #  $  cd videos
-#  $  cp youtube_links.txt ~/downloads/videos
-#  $  endtube youtube_links.txt
-#  $  endtube youtube_links.txt proxies.txt
+#  $  emacs/nano/leafpad etc  ytlinks.txt  
 #
-# NOTES:  proxies must be in the file in format protocol://ipv4adress:port 
+#     Populate list of youtube links into the file ytlinks.txt by right click and paste into the file in a column
+#     save ytlinks.txt and exit editor.
+#  
+#     Run EndTube 
+#  $  endtube ytlinks.txt
+#
+#  $ emacs/nano/leafpad etc proxies.txt 
+#
+#     Populate list of proxies from a fresh proxy source, save the list and test the proxies using
+#
+#  $  torsocks curl --proxy protocol://ipv4address:port www.google.com
+#
+#     Run EndTube
+#  $  endtube ytinks.txt proxies.txt
+#
+# NOTES:  proxies must be in the file in format protocol://ipv4address:port 
 #         eg. https://5.3.55.125:8080
 #
 ############################################################################################################################################################################
@@ -171,7 +191,7 @@ echo "$UA"
 delay=$( expr 20 + $(head -c 2 /dev/urandom | od -A n -i) % 180 | awk '{print $1}')
 echo "Delaying download for "$delay" seconds"
 # wait by delay time
-#sleep "$delay"
+sleep "$delay"
 
 echo "Downloading "$link""
 # initiate download and change user agent
