@@ -1,4 +1,3 @@
-
 # /bin/sh
 #################################################################################################################################################
 # NAME: endtube.sh
@@ -8,8 +7,12 @@
 #
 # AUTHOR:  ENDWALL DEVELOPEMENT TEAM
 # CREATION DATE:   APRIL 9 2016
-# VERSION: 0.04
+# VERSION: 0.05
 # REVISION DATE: APRIL 18 2015
+#
+# CHANGE LOG:   - removed some user agents
+#
+#
 #
 # DEPENDANCIES: torsocks,youtube-dl,calc,od,head,urandom,sleep
 #
@@ -27,7 +30,31 @@
 #  $  cp youtube_links.txt ~/downloads/videos
 #  $  endtube youtube_links.txt
 #
-##################################################################################################################################################
+############################################################################################################################################################################
+#                                       ACKNOWLEDGEMENTS
+############################################################################################################################################################################
+#  The Endwall development team would like to acknowledge the work and efforts
+#  of Odilitime, who graciously hosted and promoted this firewall project.
+#  Without his efforts and his wonderful website www.endchan.xyz , endwall.sh would not
+#  exist in the public domain at all in any form. So thanks to Odilitime for inspiring this work
+#  and for hosting and promoting it. 
+#  
+#  Endwall,Endsets,Endlists, and Endtools are named in honor of Endchan.
+#
+#  Thank you also to early beta testers including a@a, and to other contributors 
+#  as well as to the detractors who helped to critique this work and to ultimately improve it.  
+#  
+#  We also acknowledge paste.debian.net and gitweb for their hosting services, 
+#  without which distribution would be limited / impossible, so thank you.
+#
+#  https://www.endchan.xyz, http://paste.debian.net, http://gitweb2zl5eh7tp3.onion  
+#
+#  We salute you! 
+#  
+#  In the end, may it all end well.
+#
+#  Endwall Development Team
+#
 ##############################################################################################################################################################################
 #                               LICENSE AGREEMENT  
 ##############################################################################################################################################################################
