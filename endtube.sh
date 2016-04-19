@@ -1,20 +1,17 @@
 # /bin/sh
 #################################################################################################################################################
-# NAME: endtube.sh
+# NAME: endtube_p.sh
 # TYPE: BOURNE SHELL SCRIPT
-# DESCRIPTION: Downlods youtube video files from an input list 
-#              anonymously using youtube-dl and torsocks
+# DESCRIPTION: Downlods youtube video files from an input video url list
+#              and an input proxy url list, by randomizing lists and  
+#              anonymously using youtube-dl, torsocks, and the proxy
 #
 # AUTHOR:  ENDWALL DEVELOPEMENT TEAM
 # CREATION DATE:   APRIL 9 2016
-# VERSION: 0.05
-# REVISION DATE: APRIL 18 2015
+# VERSION: 0.06
+# REVISION DATE: APRIL 19 2015
 #
-# CHANGE LOG:   - removed some user agents
-#
-#
-#
-# DEPENDANCIES: torsocks,youtube-dl,calc,od,head,urandom,sleep
+# DEPENDANCIES: torsocks,youtube-dl,od,head,urandom,sleep
 #
 # INSTRUCTIONS:  do the following at a command prompt
 #
@@ -29,6 +26,10 @@
 #  $  cd videos
 #  $  cp youtube_links.txt ~/downloads/videos
 #  $  endtube youtube_links.txt
+#  $  endtube youtube_links.txt proxies.txt
+#
+# NOTES:  proxies must be in the file in format protocol://ipv4adress:port 
+#         eg. https://5.3.55.125:8080
 #
 ############################################################################################################################################################################
 #                                       ACKNOWLEDGEMENTS
@@ -131,17 +132,21 @@
 
 ##  get input list from shell argument 
 
-unsorted=$1
+Lunsort=$1
+Punsort=$2
+nargs="$#"
 
-# randomly sort this list
-sort -R $unsorted > temp.srt
+echo "Number of Arguments = " "$nargs"
 
-list=temp.srt
+# randomly sort these lists
+sort -R $Lunsort > temp1.srt
+list=temp1.srt
 
+
+#main loop to select random user agent
 for link in $(cat "$list" ); do  
-
 # pick a random user agent
-n=$( calc $(head -c2 /dev/urandom | od -A n -i) % 12  | awk '{print $1}')
+n=$( expr $(head -c2 /dev/urandom | od -A n -i) % 15  | awk '{print $1}')
 # set the user agent
 #echo "$n"
 if [ $n -le 5 ]
@@ -151,26 +156,46 @@ else
  case $n in 
  ( 6 )  UA="Mozilla/5.0 (Windows NT 6.1; rv:38.0) Gecko/20100101 Firefox/38.0" ;;
  ( 7 )  UA="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0" ;;
- ( 8 )  UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0) Gecko/20100101 Firefox/45.0" ;;
- ( 9 )  UA="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36" ;;
- ( 10 ) UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36" ;;
- ( 11 ) UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36" ;;          
+ ( 8 )  UA="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0" ;;
+ ( 9 )  UA="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0" ;;
+ ( 10 ) UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:43.0) Gecko/20100101 Firefox/43.0" ;;
+ ( 11 ) UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:45.0) Gecko/20100101 Firefox/45.0" ;;
+ ( 12 ) UA="Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36" ;;
+ ( 13 ) UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36" ;;
+ ( 14 ) UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.110 Safari/537.36" ;;          
  esac
 fi
 echo "$UA"
 
 # generate a random number time delay
-delay=$(calc 20+$(head -c 2 /dev/urandom | od -A n -i) % 180 | awk '{print $1}')
-
+delay=$( expr 20 + $(head -c 2 /dev/urandom | od -A n -i) % 180 | awk '{print $1}')
 echo "Delaying download for "$delay" seconds"
 # wait by delay time
-sleep "$delay"
+#sleep "$delay"
+
 echo "Downloading "$link""
 # initiate download and change user agent
-torsocks youtube-dl --user-agent "$UA" "$link" 
+
+if [ "$nargs" -eq 2 ]
+then
+  # randomly sort proxies
+  sort -R $Punsort > temp2.srt
+  proxies=temp2.srt
+  # load the random proxy
+    for url in $(cat $proxies);do
+    Prxy="$url"
+    done
+  echo "Random Proxy is" "$Prxy" 
+  # initiate download + tor + random UA + proxy
+  torsocks youtube-dl --user-agent "$UA" --proxy "$Prxy" "$link" 
+  rm $proxies
+else 
+  # initate download +tor + random agent - proxy 
+  torsocks youtube-dl --user-agent "$UA" "$link" 
+fi
+
 done
 # sometimes the download cuts off so don't delete the file until its all done
 rm "$list"
-
 exit 0
  
