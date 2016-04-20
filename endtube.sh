@@ -14,7 +14,7 @@
 # DEPENDANCIES: torsocks,youtube-dl,od,head,urandom,sleep
 #
 # CHANGE LOG:  - fixed instructions
-#
+#              - fixed some typos
 #
 #
 ##########################################################################################################################################################
@@ -156,8 +156,6 @@ Lunsort=$1
 Punsort=$2
 nargs="$#"
 
-echo "Number of Arguments = " "$nargs"
-
 # randomly sort these lists
 sort -R $Lunsort > temp1.srt
 list=temp1.srt
@@ -202,8 +200,13 @@ then
   sort -R $Punsort > temp2.srt
   proxies=temp2.srt
   # load the random proxy
+    n=$( expr $(head -c2 /dev/urandom | od -A n -i) % 3  | awk '{print $1}')
     for url in $(cat $proxies);do
-    Prxy="$url"
+      if [ $k -eq $n ] 
+      then  
+        Prxy="$url"
+      fi
+      k=$( expr $k +1 )
     done
   echo "Random Proxy is" "$Prxy" 
   # initiate download + tor + random UA + proxy
