@@ -8,12 +8,13 @@
 #
 # AUTHOR:  ENDWALL DEVELOPEMENT TEAM
 # CREATION DATE:   APRIL 9 2016
-# VERSION: 0.07
+# VERSION: 0.08
 # REVISION DATE: APRIL 19 2015
 #
 # DEPENDANCIES: torsocks,youtube-dl,od,head,urandom,sleep
 #
-# CHANGE LOG:  - fixed instructions
+# CHANGE LOG:  - fixed randomization of proxies 
+#              - fixed instructions
 #              - fixed some typos
 #
 #
@@ -39,9 +40,10 @@
 #     Run EndTube 
 #  $  endtube ytlinks.txt
 #
-#  $ emacs/nano/leafpad etc proxies.txt 
-#
-#     Populate list of proxies from a fresh proxy source, save the list and test the proxies using
+#  $ emacs/nano/leafpad etc proxies.txt    
+#     
+#     You require 4 fresh https proxies for operation
+#     Populate the list of proxies from a fresh proxy source, save the list and test the proxies using
 #
 #  $  torsocks curl --proxy protocol://ipv4address:port www.google.com
 #
