@@ -201,6 +201,7 @@ then
   proxies=temp2.srt
   # load the random proxy
     n=$( expr $(head -c2 /dev/urandom | od -A n -i) % 3  | awk '{print $1}')
+    k="0"
     for url in $(cat $proxies);do
       if [ $k -eq $n ] 
       then  
