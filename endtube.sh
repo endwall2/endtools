@@ -1,6 +1,6 @@
-# /bin/sh
+#!/bin/sh
 #################################################################################################################################################
-# NAME: endtube_p.sh
+# NAME: endtube.sh
 # TYPE: BOURNE SHELL SCRIPT
 # DESCRIPTION: Downlods youtube video files from an input video url list
 #              and an input proxy url list, by randomizing lists and  
@@ -8,37 +8,67 @@
 #
 # AUTHOR:  ENDWALL DEVELOPEMENT TEAM
 # CREATION DATE:   APRIL 9 2016
-# VERSION: 0.09
-# REVISION DATE: APRIL 24 2015
+# VERSION: 0.10
+# REVISION DATE: APRIL 25 2015
+# 
+# CHANGE LOG:  - Added a bunch of user-agents
+#              - Fixed some typos
+#              - updated EULA
+#              - Fixed randomization of proxies 
+#              - Fixed instructions
 #
-# DEPENDANCIES: torsocks,youtube-dl,od,head,urandom,sleep
-#
-# INSTRUCTIONS:  do the following at a command prompt
+########################################################################################################################################
+# DEPENDENCIES: torsocks,youtube-dl,od,head,urandom,sleep
+########################################################################################################################################
+# INSTRUCTIONS: Make a bin directory in ~/ add it to the path. Copy this file there and make executable.
+#               Make a videos directory in Downloads.  Get some download links, and some proxies place in separte text files.
+#               Start the TOR daemon. Execute the script in the ~/Download/videos/ directory.    
+#   
+#  Do the following at a command prompt
 #
 #  $  mkdir ~/bin
 #  $  chmod u+wrx endtube.sh
 #  $  cp endtube.sh ~/bin
 #  $  export PATH=$PATH:~/bin
-#  $  sudo systemctl start tor
-#  $  sudo systemctl status tor
-#  $  cd downloads
+#  $  cd Downloads
 #  $  mkdir videos
 #  $  cd videos
-#  $  cp youtube_links.txt ~/downloads/videos
-#  $  endtube youtube_links.txt
-#  $  endtube youtube_links.txt proxies.txt
+#  $  emacs/nano/leafpad etc  ytlinks.txt  
 #
-# NOTES:  proxies must be in the file in format protocol://ipv4address:port 
-#         eg. https://5.3.55.125:8080
+#     Populate list of youtube links into the file ytlinks.txt by right click and paste into the file in a column
+#     save ytlinks.txt and exit editor.
+# 
+#  START TOR DAEMON:
+#     SYSTEMD:
+#  $ sudo systemctl start tor
+#  $ sudo systemctl status tor
+#     OPENRC:
+#  $ sudo rc-update add tor default
+#  $ sudo rc-service start tor
+#  $ sudo rc-status
+#      
+#     Run EndTube 
+#  $  endtube ytlinks.txt
+#  
+#  Using with Proxies:
+#  $ emacs/nano/leafpad etc proxies.txt    
+#     
+#     You will require at least 4 fresh https proxies for operation, get as many as possible
+#     Populate the list of proxies from a fresh proxy source, save the list and test the proxies using
+#     proxies must be in the file in format protocol://ipv4address:port 
+#     eg. https://5.3.55.125:8080
+#
+#  $  torsocks curl --proxy protocol://ipv4address:port www.google.com
+#
+#     Run EndTube
+#  $  endtube ytinks.txt proxies.txt
 #
 ############################################################################################################################################################################
 #                                       ACKNOWLEDGEMENTS
 ############################################################################################################################################################################
-#  The Endwall development team would like to acknowledge the work and efforts
-#  of Odilitime, who graciously hosted and promoted this firewall project.
-#  Without his efforts and his wonderful website www.endchan.xyz , endwall.sh would not
-#  exist in the public domain at all in any form. So thanks to Odilitime for inspiring this work
-#  and for hosting and promoting it. 
+#  The Endwall development team would like to acknowledge the work and efforts of Odilitime, who graciously hosted and promoted this firewall project.
+#  Without his efforts and his wonderful website www.endchan.xyz , endwall.sh, endsets.sh, and endtube.sh would not exist in the public domain at all in any form. 
+#  Many thanks to Odilitime for inspiring this work and for hosting and promoting it. 
 #  
 #  Endwall,Endsets,Endlists, and Endtools are named in honor of Endchan.
 #
@@ -57,12 +87,12 @@
 #  Endwall Development Team
 #
 ##############################################################################################################################################################################
-#                               LICENSE AGREEMENT  
+#                                        LICENSE AGREEMENT  
 ##############################################################################################################################################################################
 #  BEGINNING OF LICENSE AGREMENT
 #  TITLE:  THE ENDWALL END USER LICENSE AGREEMENT (EULA) 
-#  VERSION: 1.04 
-#  VERSION DATE: April 11, 2016
+#  VERSION: 1.05 
+#  VERSION DATE: April 19, 2016
 #   
 #  WHAT CONSTITUES "USE"? WHAT IS A "USER"?
 #  0) a) Use of this program means the ability to study, posses, run, copy, modify, publish, distribute and sell the code as included in all lines of this file,
@@ -73,7 +103,7 @@
 #  1) a) This program may be used by any living human being, any person, any corporation, any company, and by any sentient individual with the willingness and ability to do so.
 #  1) b) This program may be used by any citizen or resident of any country, and by any human being without citizenship or residency.
 #  1) c) This program may be used by any civilian, military officer, government agent, private citizen, public official, soveriegn, monarch, head of state,
-#        dignitary, ambassdor, noble, commoner, clergy, layity, and generally all classes and ranks of people, persons, or human beings mentioned and those not mentioned.
+#        dignitary, ambassdor, noble, commoner, clergy, layity, and generally all classes and ranks of people, persons, and human beings mentioned and those not mentioned.
 #  1) d) This program may be used by any human being of any gender, including men, women, and any other gender not mentioned.       
 #  1) e) This program may be used by anyone of any afiliation, political viewpoint, political affiliation, religious belief, religious affiliation, and by those of non-belief or non affiliation.
 #  1) f) This program may be used by any person of any race, ethnicity, identity, origin, genetic makeup, physical apperance, mental ability, and by those of any other physical 
@@ -93,12 +123,12 @@
 #  WHAT MAY A "USER" DO WITH THIS PROGRAM ?
 #  4) Any user of this program is granted the freedom to study the code.
 #  5) a) Any user of this program is granted the freedom to distribute, publish, share the code with any neighbor of their choice electronically or by any other method of transmission. 
-#  5) b) The LICENCSE AGREEMENT, ACKNOWLEDGEMENTS, Header and Instructions must remain attached to the code when re-distributed.
+#  5) b) The LICENCSE AGREEMENT, ACKNOWLEDGEMENTS, Header and Instructions must remain attached to the code in their entirety when re-distributed.
 #  5) c) Any user of this program is granted the freedom to sell this software as distributed or to bundle it with other software or saleable goods.
 #  6) a) Any user of this program is granted the freedom to modify and improve the code.
 #  6) b) When modified or improved, any user of this program is granted the freedom of re-distribution of their modified code if and only if the user attatchs the LICENSE AGREEMENT
 #        in its entirety to their modified code before re-distribution.
-#  6) c) Any user of this software is granted the freedom to sell their modified copy of this software or to bundle their modified copy with other software or salable goods.
+#  6) c) Any user of this software is granted the freedom to sell their modified copy of this software or to bundle their modified copy with other software or saleable goods.
 #  7) a) Any user of this program is granted the freedom to run this code on any computer of their choice.
 #  7) b) Any user of this program is granted the freedom to run as many simultaneous instances of this code, on as many computers as they are able to and desire, and for as long as they desire and are
 #        able to do so with any degree of simultaneity in use. 
@@ -116,11 +146,11 @@
 #  WHAT RELATIONSHIP DO THE USERS HAVE WITH THE CREATORS OF THE SOFTWARE ?
 #  12)  This software is distributed without any warranty and without any guaranty and the creators do not imply anything about its usefulness or efficacy.
 #  13)  If the user suffers or sustains financial loss, informational loss, material loss, physical loss or data loss as a result of using, running, or modifying this software 
-#       the user agrees that they will hold the creators of this software, the "Endwall Development Team" and the programers involved in its creation, free from prosecution, 
+#       the user agrees that they will hold the creators of this software, the "Endwall Development Team", and the programers involved in its creation, free from prosecution, 
 #       free from indemnity, and free from liability, and will not attempt to seek restitution or renumeration for any such loss real or imagined.
 #  END OF LICENSE AGREEMENT
 ##################################################################################################################################################################################
-#  ADITIONAL NOTES:
+#  ADDITIONAL NOTES:
 #  14)  If a user finds a significant flaw or makes a significant improvement to this software, please feel free to notify the original developers so that we may also
 #       include your user improvement in the next release; users are not obligated to do this, but we would enjoy this courtesy tremendously.
 #
@@ -129,7 +159,8 @@
 #       This would be deemed unacceptable and is specifically rejected by the enumeration presented.  If the wording presented is problematic please contact us and suggest a change,
 #       and it will be taken into consideration.  
 #################################################################################################################################################################################
-
+ 
+#####################################################        BEGINNING OF PROGRAM      #####################################################################################
 ##  get input list from shell argument 
 
 Lunsort=$1
@@ -258,4 +289,5 @@ done
 # sometimes the download cuts off so don't delete the file until its all done
 rm "$list"
 exit 0
+#########################################################        END OF PROGRAM         ######################################################################################
  
