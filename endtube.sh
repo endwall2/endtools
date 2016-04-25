@@ -8,8 +8,8 @@
 #
 # AUTHOR:  ENDWALL DEVELOPEMENT TEAM
 # CREATION DATE:   APRIL 9 2016
-# VERSION: 0.08
-# REVISION DATE: APRIL 19 2015
+# VERSION: 0.09
+# REVISION DATE: APRIL 24 2015
 #
 # DEPENDANCIES: torsocks,youtube-dl,od,head,urandom,sleep
 #
@@ -144,7 +144,7 @@ list=temp1.srt
 #main loop to select random user agent
 for link in $(cat "$list" ); do  
 # pick a random user agent
-n=$( expr $(head -c2 /dev/urandom | od -A n -i) % 67  | awk '{print $1}')
+n=$( expr $(head -c2 /dev/urandom | od -A n -i) % 70  | awk '{print $1}')
 # set the user agent
 #echo "$n"
 if [ "$n" -le "5" ]
@@ -213,7 +213,10 @@ else
  ( 64 ) UA="Mozilla/5.0 (iPad; CPU OS 9_2 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13C75 Safari/601.1" ;;
  ( 65 ) UA="Mozilla/5.0 (iPad; CPU OS 9_3 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13E233 Safari/601.1" ;;
  ( 66 ) UA="Mozilla/5.0 (iPad; CPU OS 9_3_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13E238 Safari/601.1" ;;
-
+ ( 67 ) UA="Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0)"
+ ( 68 ) UA="Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"
+ ( 69 ) UA="Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Win64; x64; Trident/5.0)"
+ 
  esac
 fi
 echo "$UA"
