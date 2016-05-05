@@ -1,13 +1,15 @@
-#! /bin/sh
+#!/bin/sh
 ##############################################################################################################################################################################
-# Program : mlogz
+# Program : mlogz.sh
 # Type: Bourne Shell Script
 # Description: Print mail log for a given day
 # Notes: Invoke with root permisions
-# Author: Endwall Development Team
+# Author: The Endware Development Team
 # Creation Date: February 13, 2016
 # Current Version: 1.06
 # Version Date: May 04 2016
+# Copyright: The Endware Development Team, 2016
+##########################################################################################################################################################################
 # Instructions: $ chmod u+rwx mlogalertz.sh
 # Examples:     $ su
 #               # ./mlogz.sh

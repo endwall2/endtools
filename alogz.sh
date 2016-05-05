@@ -1,13 +1,14 @@
-#! /bin/sh
+#!/bin/sh
 #########################################################################################################################################
 # Program: alogz.sh
 # Type: Bourne shell script
 # Description: Print the apache log by date
-# Author: The Endwall Development Team
+# Author: The Endware Development Team
 # Notes: Invoke with root privaleges
 # Creation Date: February 13, 2016
 # Current Version: 1.06
 # Version Date: May 04, 2016
+# Copyright: The Endware Development Team, 2016
 ################################################################################################################################### 
 # Instructions: $ chmod u+rwx alogalertz.sh
 # Examples:     $ su

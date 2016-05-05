@@ -1,11 +1,13 @@
-#! /usr/bin/python
+#!/usr/bin/python
 ##########################################################################################################################################################################
 # Program: iplookup.py 
 # Type: python script
 # Creation Date: February 13, 2016
 # Current Version: 1.08
 # Version Date: May  05, 2016
-# Author: Endwall Development Team
+# Author: The Endware Development Team
+# Copyright: The Endware Development Team, 2016
+#
 #
 # Change Log:  - Added EULA
 #              - Added country name
