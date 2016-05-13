@@ -1,3 +1,4 @@
+
 #!/bin/sh
 #################################################################################################################################################
 # NAME: endnode.sh
@@ -66,16 +67,16 @@
 #  In the end, may it all end well.
 #
 #  Endwall Development Team
-#
-##############################################################################################################################################################################
-#                                        LICENSE AGREEMENT  
+###############################################################################################################################################################################
+#                               LICENSE AGREEMENT  
 ##############################################################################################################################################################################
 #  BEGINNING OF LICENSE AGREMENT
-#  TITLE:  THE ENDWALL END USER LICENSE AGREEMENT (EULA) 
+#  TITLE:  THE ENDWARE END USER LICENSE AGREEMENT (EULA) 
 #  CREATION DATE: MARCH 19, 2016
-#  VERSION: 1.06 
-#  VERSION DATE: MAY 1, 2016
-#   
+#  VERSION: 1.08 
+#  VERSION DATE: MAY 12, 2016
+#  COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016
+#      
 #  WHAT CONSTITUES "USE"? WHAT IS A "USER"?
 #  0) a) Use of this program means the ability to study, posses, run, copy, modify, publish, distribute and sell the code as included in all lines of this file,
 #        in text format or as a binary file consituting this particular program or its compiled binary machine code form, as well as the the performance 
@@ -122,17 +123,17 @@
 #      b) This software is a tool, like a hammer, and may be used in a process which applies for and gains a patent, as a substitutable input into the process;
 #         however the software tool itself may not be included in the patent or covered in the patent as a novel invention, and the user agrees not to do this and not to attempt to do this.
 #  WHO GRANTS THESE FREEDOMS ?
-#  10) The creators of this software are the original developer, and anyone listed as being a member of the Endwall Development Team, as well as ancillary contributors, and user modifiers and developers of the software. 
-#  11) The aformentioned freedoms of use listed in sections 4),5),6),and 7) are granted by the creators of this software and the Endwall Development Team to any qualifying user listed in section 1) and 
+#  10) The creators of this software are the original developer,"Endwall", and anyone listed as being a member of "The Endware Development Team", as well as ancillary contributors, and user modifiers and developers of the software. 
+#  11) The aformentioned freedoms of use listed in sections 4),5),6),and 7) are granted by the creators of this software and the Endware Development Team to any qualifying user listed in section 1) and 
 #      comporting with any restrictions and qualifications mentioned in sections 2), 3), 8), 9), 10) and 11) of this LICENSE AGREEMENT.
 #  WHAT RELATIONSHIP DO THE USERS HAVE WITH THE CREATORS OF THE SOFTWARE ?
 #  12)  This software is distributed without any warranty and without any guaranty and the creators do not imply anything about its usefulness or efficacy.
 #  13)  If the user suffers or sustains financial loss, informational loss, material loss, physical loss or data loss as a result of using, running, or modifying this software 
-#       the user agrees that they will hold the creators of this software, the "Endwall Development Team", and the programers involved in its creation, free from prosecution, 
+#       the user agrees that they will hold the creators of this software, "The Endware Development Team", "Endwall", and the programers involved in its creation, free from prosecution, 
 #       free from indemnity, and free from liability, and will not attempt to seek restitution or renumeration for any such loss real or imagined.
 #  END OF LICENSE AGREEMENT
 ##################################################################################################################################################################################
-#  ADDITIONAL NOTES:
+#  ADITIONAL NOTES:
 #  14)  If a user finds a significant flaw or makes a significant improvement to this software, please feel free to notify the original developers so that we may also
 #       include your user improvement in the next release; users are not obligated to do this, but we would enjoy this courtesy tremendously.
 #
@@ -141,7 +142,7 @@
 #       This would be deemed unacceptable and is specifically rejected by the enumeration presented.  If the wording presented is problematic please contact us and suggest a change,
 #       and it will be taken into consideration.  
 #################################################################################################################################################################################
- 
+
 #####################################################        BEGINNING OF PROGRAM      #####################################################################################
 ##  get input list from shell argument 
 
