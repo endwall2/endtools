@@ -4,11 +4,11 @@
 #  BEGINNING OF LICENSE AGREMENT
 #  TITLE:  THE ENDWARE END USER LICENSE AGREEMENT (EULA) 
 #  CREATION DATE: MARCH 19, 2016
-#  VERSION: 1.08 
-#  VERSION DATE: MAY 12, 2016
+#  VERSION: 1.09 
+#  VERSION DATE: MAY 14, 2016
 #  COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016
 #      
-#  WHAT CONSTITUES "USE"? WHAT IS A "USER"?
+#  WHAT CONSTITUTES "USE"? WHAT IS A "USER"?
 #  0) a) Use of this program means the ability to study, posses, run, copy, modify, publish, distribute and sell the code as included in all lines of this file,
 #        in text format or as a binary file consituting this particular program or its compiled binary machine code form, as well as the the performance 
 #        of these aforementioned actions and activities. 
