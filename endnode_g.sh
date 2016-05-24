@@ -1,7 +1,7 @@
 
 #!/bin/sh
 #################################################################################################################################################
-# NAME: endnode.sh
+# NAME: endnode_g.sh
 # TYPE: BOURNE SHELL SCRIPT
 # DESCRIPTION: Checks tor browswer exit node using curl and torsocks
 #
@@ -20,7 +20,7 @@
 #              - Fixed instructions
 #
 ########################################################################################################################################
-# DEPENDENCIES: torsocks,od,head,urandom,curl,iplookup.py
+# DEPENDENCIES: torsocks,od,head,urandom,curl,geoiplookup
 ########################################################################################################################################
 # INSTRUCTIONS: Make a bin directory in ~/bin add it to the path. Copy this file there and make executable, do the same for iplookup.
 #               Start the TOR daemon. Execute the script.    
@@ -28,9 +28,8 @@
 #  Do the following at a command prompt
 #
 #  $  mkdir ~/bin
-#  $  chmod u+wrx endnode.sh
-#  $  cp endnode.sh ~/bin/endnode
-#  $  cp iplookup.py ~/bin/iplookup
+#  $  chmod u+wrx endnode_g.sh
+#  $  cp endnode_g.sh ~/bin/endnode_g
 #  $  export PATH=$PATH:~/bin
 #  
 #  START TOR DAEMON:
@@ -43,7 +42,7 @@
 #  $ sudo rc-status
 #      
 #  Run EndNode
-#  $  endnode 
+#  $  endnode_g 
 #
 ############################################################################################################################################################################
 #                                       ACKNOWLEDGEMENTS
@@ -236,7 +235,7 @@ echo "$UA"
 torsocks curl -A "UA" https://check.torproject.org/ > $check_tor
 exit_address=$(grep -ah "Your IP" $check_tor | awk 'BEGIN {FS=">"} {print $3}' | awk 'BEGIN {FS="<"} {print $1}' )
 echo "TOR exit node is "$exit_address" "
-iplookup "$exit_address" 
+geoiplookup "$exit_address" 
 
 rm $check_tor
 
