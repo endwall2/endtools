@@ -1,0 +1,108 @@
+####################################################################################################
+# TITLE: TORRC-DEFAULTS CONFIGURATION
+# AUTHOR: THE ENDWARE DEVELOPEMENT TEAM
+# CREATION DATE: MAY 31, 2016
+# VERSION: 0.01
+# REVISION DATE: MAY 31, 2016
+# COPYRIGHT: THE ENDWARE DEVELOPEMENT TEAM, 2016
+#
+# DESCRIPTION: A sample tor configuration file to use with endware
+#
+# CHANGE LOG: - Annotated file
+#             - Fixed Transport and DNSPort variables
+#
+####################################################################################################
+#                                    INSTRUCTIONS
+####################################################################################################
+#  Perform the following commands
+#  $ su
+#  # cd /etc/tor/   
+#  or
+#  # cd /usr/local/etc/tor/
+# 
+#  # systemctl start tor
+#  or
+#  # rc-service tor start
+#
+#  # torsocks wget http://ix.io/N46 
+#  # mv N46 torrc-defaults
+#  # systemctl restart tor
+#  or
+#  # rc-service tor stop 
+#  # rc-service tor start
+#
+############################# BEGINING OF CONFIGURATION ############################################
+####################################################################################################
+#                                MAIN CONFIGURATION 
+####################################################################################################
+Transport 9040
+TransListenAddress 127.0.0.1
+DNSPort 9053
+DNSListenAddress 127.0.0.1
+AutomapHostsOnResolve 1
+AutomapHostsSuffixes .exit, .onion
+FetchDirInfoEarly 1
+sandbox 1
+KeepalivePeriod 180
+CircuitPriorityHalflife 0
+ExcludeSingleHopRelays 1
+CircuitIdleTimeout 1000
+CircuitBuildTimeout 60
+CircuitStreamTimeout 120
+ClientOnly 1
+GeoIPExcludeUnknown 1
+EnforceDistinctSubnets 1
+UseEntryGuards 1
+UseEntryGuardsAsDirGuards 1
+FastFirstHopPK 0
+AllowSingleHopCircuits 0
+Tor2webMode 0
+FetchServerDescriptors 1
+FetchHidServDescriptors 1
+FetchUselessDescriptors 1
+UseNTorHandshake 1
+UseMicrodescriptors 1
+ClientRejectInternalAddresses 1
+ClientDNSRejectInternalAddresses 1
+UpdateBridgesFromAuthority 1
+
+#DisableAllSwap 1 
+#Only works if starting tor as root
+##################################################################################################
+
+###################################################################################################
+#                              VARIABLE CONFIGURATION
+###################################################################################################
+
+# TWEAK THE VARIABLES IN THE LINES BELOW  # 
+
+BandwidthRate  1 MByte
+BandwidthBurst 1 MByte
+PerConnBWRate  1 MBytes
+PerConnBWBurst 1 MBytes
+RelayBandwidthRate  1 MBytes
+RelayBandwidthBurst 1 MBytes
+
+NumEntryGuards 10
+NumDirectoryGuards 10
+GuardLifetime 5 days
+
+NewCircuitPeriod 60
+MaxCircuitDirtiness 180
+PathsNeededToBuildCircuits 0.70
+
+#SafeSocks 1
+StrictNodes 1
+ExcludeNodes {??},{US},{CA},{GB},{NZ},{AU},{CN},{TW},{RU},{AF},{CO},{CU},{CZ},{IL},{IQ},{IR},{SA},{SY},{UA}
+ExcludeExitNodes {??},{US},{CA},{GB},{NZ},{AU},{CN},{TW},{RU},{AF},{CO},{CU},{CZ},{IL},{IQ},{IR},{SA},{SY},{UA}
+EntryNodes {DE},{FR},{ES},{IT}
+ExitNodes {DE},{FR},{ES},{IT},{DK},{BE},{NL},{CH},{AT},{PL},{CZ}
+
+####################################### BRIDGES ##############################################################
+# UseBridges 1
+# Bridge [transport] IP:ORPort [fingerprint]
+# Bridge [transport] IP:ORPort [fingerprint]
+# Bridge [transport] IP:ORPort [fingerprint]
+# need to set Bridge config lines
+#
+###############################   END  OF CONFIGURATION  #######################################################
