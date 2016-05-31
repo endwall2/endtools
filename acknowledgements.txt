@@ -1,11 +1,9 @@
 ##############################################################################################################################################
 #                                         ACKNOWLEDGEMENTS
 ##############################################################################################################################################
-#  The Endware Development Team would like to acknowledge the work and efforts
-#  of OdiliTime, who graciously hosted and promoted this firewall project.
-#  Without his efforts and his wonderful website www.endchan.xyz , the Endware Suite including Endwall would not
-#  exist in the public domain at all in any form. So thanks to OdiliTime for inspiring this work
-#  and for hosting and promoting it. 
+#  The Endware Development Team would like to acknowledge the work and efforts of OdiliTime, who graciously hosted and promoted this software project.
+#  Without his efforts and his wonderful website www.endchan.xyz , the Endware Suite would not exist in the public domain at all in any form. 
+#  So thanks to OdiliTime for inspiring this work and for hosting and promoting it. 
 #  
 #  The Endware Suite including Endwall,Endsets,Endlists,Endtools, Endloads and Endtube are named in honor of Endchan.
 #
