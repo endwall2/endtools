@@ -2,13 +2,14 @@
 # TITLE: TORRC-DEFAULTS CONFIGURATION
 # AUTHOR: THE ENDWARE DEVELOPEMENT TEAM
 # CREATION DATE: MAY 31, 2016
-# VERSION: 0.01
+# VERSION: 0.02
 # REVISION DATE: MAY 31, 2016
 # COPYRIGHT: THE ENDWARE DEVELOPEMENT TEAM, 2016
 #
 # DESCRIPTION: A sample tor configuration file to use with endware
 #
-# CHANGE LOG: - Annotated file
+# CHANGE LOG: - allow nodes from US,CA
+#             - Annotated file
 #             - Fixed Transport and DNSPort variables
 #
 ###################################################################################################
@@ -187,7 +188,7 @@ PathsNeededToBuildCircuits 0.70
 
 #SafeSocks 1
 StrictNodes 1
-ExcludeNodes {??},{US},{CA},{GB},{NZ},{AU},{CN},{TW},{RU},{AF},{CO},{CU},{CZ},{IL},{IQ},{IR},{SA},{SY},{UA}
+ExcludeNodes {??},{GB},{NZ},{AU},{CN},{TW},{RU},{AF},{CO},{CU},{CZ},{IL},{IQ},{IR},{SA},{SY},{UA}
 ExcludeExitNodes {??},{US},{CA},{GB},{NZ},{AU},{CN},{TW},{RU},{AF},{CO},{CU},{CZ},{IL},{IQ},{IR},{SA},{SY},{UA}
 EntryNodes {DE},{FR},{ES},{IT}
 ExitNodes {DE},{FR},{ES},{IT},{DK},{BE},{NL},{CH},{AT},{PL},{CZ}
