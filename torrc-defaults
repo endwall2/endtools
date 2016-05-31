@@ -11,6 +11,8 @@
 # CHANGE LOG: - Annotated file
 #             - Fixed Transport and DNSPort variables
 #
+###################################################################################################
+# DEPENDANCIES: tor,torsocks, a working torrc and torrsocks.conf in /etc/tor/ or /usr/local/etc/tor
 ####################################################################################################
 #                                    INSTRUCTIONS
 ####################################################################################################
@@ -129,7 +131,9 @@
 #       This would be deemed unacceptable and is specifically rejected by the enumeration presented.  If the wording presented is problematic please contact us and suggest a change,
 #       and it will be taken into consideration.  
 #################################################################################################################################################################################
+
 ######################################################## BEGINING OF CONFIGURATION ###############################################################################################
+
 #############################################################################################################
 #                                     MAIN CONFIGURATION 
 #############################################################################################################
@@ -140,7 +144,7 @@ DNSListenAddress 127.0.0.1
 AutomapHostsOnResolve 1
 AutomapHostsSuffixes .exit, .onion
 FetchDirInfoEarly 1
-sandbox 1
+Sandbox 1
 KeepalivePeriod 180
 CircuitPriorityHalflife 0
 ExcludeSingleHopRelays 1
@@ -171,15 +175,7 @@ UpdateBridgesFromAuthority 1
 ###################################################################################################
 #                              VARIABLE CONFIGURATION
 ###################################################################################################
-
-# TWEAK THE VARIABLES IN THE LINES BELOW  # 
-
-BandwidthRate  1 MByte
-BandwidthBurst 1 MByte
-PerConnBWRate  1 MBytes
-PerConnBWBurst 1 MBytes
-RelayBandwidthRate  1 MBytes
-RelayBandwidthBurst 1 MBytes
+## TWEAK THE VARIABLES IN THE LINES BELOW   
 
 NumEntryGuards 10
 NumDirectoryGuards 10
@@ -197,10 +193,18 @@ EntryNodes {DE},{FR},{ES},{IT}
 ExitNodes {DE},{FR},{ES},{IT},{DK},{BE},{NL},{CH},{AT},{PL},{CZ}
 
 ####################################### BRIDGES ##############################################################
-# UseBridges 1
-# Bridge [transport] IP:ORPort [fingerprint]
-# Bridge [transport] IP:ORPort [fingerprint]
-# Bridge [transport] IP:ORPort [fingerprint]
-# need to set Bridge config lines
+#UseBridges 1
+#Bridge [transport] IP:ORPort [fingerprint]
+#Bridge [transport] IP:ORPort [fingerprint]
+#Bridge [transport] IP:ORPort [fingerprint]
+## need to set Bridge config lines
 #
+######################################  RATE LIMITING ########################################################
+BandwidthRate  1 MByte
+BandwidthBurst 1 MByte
+#PerConnBWRate  1 MBytes
+#PerConnBWBurst 1 MBytes
+#RelayBandwidthRate  1 MBytes
+#RelayBandwidthBurst 1 MBytes
+
 ###############################################   END  OF CONFIGURATION  #####################################################################
