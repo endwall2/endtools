@@ -26,8 +26,8 @@
 #  or
 #  # rc-service tor start
 #
-#  # torsocks wget http://ix.io/N46 
-#  # mv N46 torrc-defaults
+#  # torsocks wget http://ix.io/NjJ 
+#  # mv NjJ torrc-defaults
 #  # systemctl restart tor
 #  or
 #  # rc-service tor stop 
