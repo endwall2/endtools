@@ -149,7 +149,7 @@ y=$( expr $y + 5 )
 
 done
 
-iplookup "$ip"
+geoiplookup "$ip"
 
 exit 0
 #################### END OF PROGRAM ##################################
