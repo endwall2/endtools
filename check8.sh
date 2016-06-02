@@ -5,8 +5,8 @@
 # DESCRIPTION: Checks the /8 CIDR block using iplookup
 # AUTHOR: THE ENDWARE DEVELOPMENT TEAM
 # CREATION DATE: MAY 12, 2016
-# VERSION: 0.02
-# REVISION DATE: MAY 24, 2016
+# VERSION: 0.03
+# REVISION DATE: JUNE 2, 2016
 # COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016
 #
 # CHANGE LOG:  - Added flag -e to switch from geoiplookup (default) to endware iplookup 
