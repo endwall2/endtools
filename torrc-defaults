@@ -2,13 +2,14 @@
 # TITLE: TORRC-DEFAULTS CONFIGURATION
 # AUTHOR: THE ENDWARE DEVELOPEMENT TEAM
 # CREATION DATE: MAY 31, 2016
-# VERSION: 0.02
-# REVISION DATE: MAY 31, 2016
+# VERSION: 0.03
+# REVISION DATE: Jun 2, 2016
 # COPYRIGHT: THE ENDWARE DEVELOPEMENT TEAM, 2016
 #
 # DESCRIPTION: A sample tor configuration file to use with endware
 #
-# CHANGE LOG: - allow nodes from US,CA
+# CHANGE LOG: - Tweaked some variables
+#             - Allow nodes from US,CA; this fixes some connection problems
 #             - Annotated file
 #             - Fixed Transport and DNSPort variables
 #
@@ -149,9 +150,9 @@ Sandbox 1
 KeepalivePeriod 180
 CircuitPriorityHalflife 0
 ExcludeSingleHopRelays 1
-CircuitIdleTimeout 1000
+CircuitIdleTimeout 600
 CircuitBuildTimeout 60
-CircuitStreamTimeout 120
+CircuitStreamTimeout 180
 ClientOnly 1
 GeoIPExcludeUnknown 1
 EnforceDistinctSubnets 1
@@ -178,8 +179,8 @@ UpdateBridgesFromAuthority 1
 ###################################################################################################
 ## TWEAK THE VARIABLES IN THE LINES BELOW   
 
-NumEntryGuards 10
-NumDirectoryGuards 10
+NumEntryGuards 20
+NumDirectoryGuards 20
 GuardLifetime 5 days
 
 NewCircuitPeriod 60
@@ -188,8 +189,8 @@ PathsNeededToBuildCircuits 0.70
 
 #SafeSocks 1
 StrictNodes 1
-ExcludeNodes {??},{GB},{NZ},{AU},{CN},{TW},{RU},{AF},{CO},{CU},{CZ},{IL},{IQ},{IR},{SA},{SY},{UA}
-ExcludeExitNodes {??},{US},{CA},{GB},{NZ},{AU},{CN},{TW},{RU},{AF},{CO},{CU},{CZ},{IL},{IQ},{IR},{SA},{SY},{UA}
+ExcludeNodes {??},{CU},{GB},{NZ},{AU},{CN},{TW},{RU},{UA},{AF},{IL},{IQ},{IR},{SA},{SY}
+ExcludeExitNodes {??},{US},{CA},{CU},{GB},{NZ},{AU},{CN},{TW},{RU},{UA},{AF},{IL},{IQ},{IR},{SA},{SY}
 EntryNodes {DE},{FR},{ES},{IT}
 ExitNodes {DE},{FR},{ES},{IT},{DK},{BE},{NL},{CH},{AT},{PL},{CZ}
 
