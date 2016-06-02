@@ -2,15 +2,18 @@
 ####################################################################
 # TITLE: check16.sh
 # TYPE: Bourne Shell Script
-# DESCRIPTION: Checks the /16 CIDR block using iplookup
+# DESCRIPTION: Checks the /16 CIDR block using geoiplookup or iplookup
 # AUTHOR: THE ENDWARE DEVELOPMENT TEAM
 # CREATION DATE: MAY 12, 2016
-# VERSION: 0.02
-# REVISION DATE: MAY 24, 2016
+# VERSION: 0.03
+# REVISION DATE: JUNE 2, 2016
 # COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016
 #
-# CHANGE LOG:  - Added Instructions and EULA
+# CHANGE LOG:   - Added flag -e for endware iplookup (default: geoiplookup)
+#               - Added Instructions and EULA
 #
+############################################################################
+#  DEPENDANCIES:  geoiplookup, iplookup.py
 ####################################################################
 #                      INSTRUCTIONS:   
 ####################################################################
@@ -24,6 +27,7 @@
 # $ chmod u+x check16
 #  RUN CHECK16
 # $ check16 56.145.12.151
+# $ check16 -e 156.14.58.198
 #####################################################################
 ############################################################################################################################################################################
 #                                       ACKNOWLEDGEMENTS
@@ -124,7 +128,15 @@
 #################################################################################################################################################################################
 
 #################### BEGINNING OF PROGRAM ###########################
-ip=$1
+
+if [ "$1" == "-e" ]
+then
+  lookup_tool="iplookup"
+  ip=$2
+else
+  ip=$1
+  lookup_tool="geoiplookup"
+fi
 
 rt=$(echo "$ip" | cut -d . -f 1,2 )
 
@@ -134,7 +146,7 @@ while [ $x -lt "260" ]; do
 
 end=$( expr $(head -c 2 /dev/urandom | od -A n -i) % 255 | awk '{print $1}')
 
-iplookup "$rt.$x.$end"
+"$lookup_tool" "$rt.$x.$end"
 
 x=$( expr $x + 5 )
 
@@ -142,7 +154,7 @@ sleep 1
 
 done
 
-iplookup "$ip"
+"$lookup_tool" "$ip"
 
 exit 0
 #################### END OF PROGRAM ##################################

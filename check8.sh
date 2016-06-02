@@ -9,8 +9,10 @@
 # REVISION DATE: MAY 24, 2016
 # COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016
 #
-# CHANGE LOG:  - Added Instructions and EULA
-# DEPENDANCIES: iplookup.py
+# CHANGE LOG:  - Added flag -e to switch from geoiplookup (default) to endware iplookup 
+#              - Added Instructions and EULA
+#
+# DEPENDANCIES: iplookup.py, geoiplookup
 ####################################################################
 #                      INSTRUCTIONS:   
 ####################################################################
@@ -24,6 +26,7 @@
 # $ chmod u+x check8
 #  RUN CHECK8
 # $ check8 56.145.12.151
+# $ check8 -e 56.145.12.185
 #####################################################################
 ############################################################################################################################################################################
 #                                       ACKNOWLEDGEMENTS
@@ -124,7 +127,15 @@
 #################################################################################################################################################################################
 
 #################### BEGINNING OF PROGRAM ###########################
-ip=$1
+
+if [ "$1" == "-e" ] 
+then
+ip="$2"
+lookup_tool="iplookup"
+else
+ip="$1"
+lookup_tool="geoiplookup"
+fi
 
 rt=$(echo "$ip" | cut -d . -f 1 )
 
@@ -138,7 +149,7 @@ while [ $x -lt "260" ]; do
 
 end=$( expr $(head -c 2 /dev/urandom | od -A n -i) % 255 | awk '{print $1}')
 
-iplookup "$rt.$y.$x.$end"
+"$lookup_tool" "$rt"."$y"."$x"."$end"
 
 x=$( expr $x + 50 )
 
@@ -150,7 +161,7 @@ y=$( expr $y + 5 )
 
 done
 
-iplookup "$ip"
+"$lookup_tool" "$ip"
 
 exit 0
 
