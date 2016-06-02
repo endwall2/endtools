@@ -171,7 +171,7 @@ ClientDNSRejectInternalAddresses 1
 UpdateBridgesFromAuthority 1
 
 #DisableAllSwap 1 
-#Only works if starting tor as root
+##Only works if starting tor as root
 ##################################################################################################
 
 ###################################################################################################
