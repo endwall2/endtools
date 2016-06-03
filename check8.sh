@@ -5,11 +5,12 @@
 # DESCRIPTION: Checks the /8 CIDR block using iplookup
 # AUTHOR: THE ENDWARE DEVELOPMENT TEAM
 # CREATION DATE: MAY 12, 2016
-# VERSION: 0.04
+# VERSION: 0.04a
 # REVISION DATE: JUNE 2, 2016
 # COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016
 #
-# CHANGE LOG:  - Fixed echo ip bug
+# CHANGE LOG:  - Fixed bracket bug missing space
+#              - Fixed echo ip bug
 #              - Added flag -e to switch from geoiplookup (default) to endware iplookup 
 #              - Added Instructions and EULA
 #
@@ -150,7 +151,7 @@ while [ $x -lt "260" ]; do
 
 end=$( expr $(head -c 2 /dev/urandom | od -A n -i) % 255 | awk '{print $1}')
 
-if [ "$lookup_tool" == "geoiplookup"]
+if [ "$lookup_tool" == "geoiplookup" ]
 then
 echo "$rt"."$y"."$x"."$end"
 fi 
