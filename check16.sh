@@ -5,12 +5,13 @@
 # DESCRIPTION: Checks the /16 CIDR block using geoiplookup or iplookup
 # AUTHOR: THE ENDWARE DEVELOPMENT TEAM
 # CREATION DATE: MAY 12, 2016
-# VERSION: 0.03
-# REVISION DATE: JUNE 2, 2016
+# VERSION: 0.04
+# REVISION DATE: JUNE 3, 2016
 # COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016
 #
-# CHANGE LOG:   - Added flag -e for endware iplookup (default: geoiplookup)
-#               - Added Instructions and EULA
+# CHANGE LOG:  - Fixed echo IP bug 
+#              - Added flag -e for endware iplookup (default: geoiplookup)
+#              - Added Instructions and EULA
 #
 ############################################################################
 #  DEPENDANCIES:  geoiplookup, iplookup.py
@@ -145,6 +146,11 @@ x="0"
 while [ $x -lt "260" ]; do
 
 end=$( expr $(head -c 2 /dev/urandom | od -A n -i) % 255 | awk '{print $1}')
+
+if [ "$lookup_tool" == "geoiplookup" ] 
+then
+echo "$rt.$x.$end"
+fi
 
 "$lookup_tool" "$rt.$x.$end"
 
