@@ -167,6 +167,9 @@ echo
 echo ~~~~~~~~~~~~~~~~~~ HTTPS BLACKLIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 grep -ah "HTTP-BL" "$tmp1" | grep -a "DPT=443 "
 echo 
+echo ~~~~~~~~~~~~~~~~~~ TOR BLACKLIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+grep -ah "TOR-BL" "$tmp1"
+echo 
 echo ~~~~~~~~~~~~~~~~~~ DNS BLACKLIST~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 grep -ah "DNS-BL" "$tmp1"
 echo 
