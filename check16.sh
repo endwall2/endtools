@@ -5,11 +5,12 @@
 # DESCRIPTION: Checks the /16 CIDR block using geoiplookup or iplookup
 # AUTHOR: THE ENDWARE DEVELOPMENT TEAM
 # CREATION DATE: MAY 12, 2016
-# VERSION: 0.04
+# VERSION: 0.05
 # REVISION DATE: JUNE 3, 2016
 # COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016
 #
-# CHANGE LOG:  - Fixed echo IP bug 
+# CHANGE LOG:  - Bug fix echo input IP at end
+#              - Fixed echo IP bug 
 #              - Added flag -e for endware iplookup (default: geoiplookup)
 #              - Added Instructions and EULA
 #
@@ -160,6 +161,10 @@ sleep 1
 
 done
 
+if [ "$lookup_tool" == "geoiplookup" ] 
+then
+echo "$rt.$x.$end"
+fi
 "$lookup_tool" "$ip"
 
 exit 0
