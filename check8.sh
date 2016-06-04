@@ -1,5 +1,5 @@
 #!/bin/sh
-####################################################################
+########################################################################
 # TITLE: check8.sh
 # TYPE: Bourne Shell Script
 # DESCRIPTION: Checks the /8 CIDR block using iplookup
@@ -14,9 +14,9 @@
 #              - Fixed echo ip bug
 #              - Added flag -e to switch from geoiplookup (default) to endware iplookup 
 #              - Added Instructions and EULA
-#
+#########################################################################
 # DEPENDANCIES: iplookup.py, geoiplookup
-####################################################################
+#########################################################################
 #                      INSTRUCTIONS:   
 ####################################################################
 # $ mkdir ~/bin

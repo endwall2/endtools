@@ -5,11 +5,12 @@
 # DESCRIPTION: Download file using wget torsocks,and 
 #              a random user agent
 #
-# AUTHOR:  ENDWALL DEVELOPEMENT TEAM
+# AUTHOR:  THE ENDWALL DEVELOPMENT TEAM
 # CREATION DATE:   APRIL 9 2016
 # VERSION: 0.11
 # REVISION DATE: MAY 24 2015
-# 
+# COPYRIGHT: THE ENDWALL DEVELOPMENT TEAM, 2016
+#
 # CHANGE LOG:  - Forked from endloads
 #              - Added extra user-agents
 #              - Forked from endtube
