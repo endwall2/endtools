@@ -63,15 +63,16 @@
 #  Endwall Development Team
 #
 ##############################################################################################################################################################################
-#                                        LICENSE AGREEMENT  
+#                               LICENSE AGREEMENT  
 ##############################################################################################################################################################################
 #  BEGINNING OF LICENSE AGREMENT
-#  TITLE:  THE ENDWALL END USER LICENSE AGREEMENT (EULA) 
+#  TITLE:  THE ENDWARE END USER LICENSE AGREEMENT (EULA) 
 #  CREATION DATE: MARCH 19, 2016
-#  VERSION: 1.06 
-#  VERSION DATE: MAY 2, 2016
-#   
-#  WHAT CONSTITUES "USE"? WHAT IS A "USER"?
+#  VERSION: 1.09 
+#  VERSION DATE: MAY 14, 2016
+#  COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016
+#      
+#  WHAT CONSTITUTES "USE"? WHAT IS A "USER"?
 #  0) a) Use of this program means the ability to study, posses, run, copy, modify, publish, distribute and sell the code as included in all lines of this file,
 #        in text format or as a binary file consituting this particular program or its compiled binary machine code form, as well as the the performance 
 #        of these aforementioned actions and activities. 
@@ -90,7 +91,7 @@
 #  WHERE MAY A USER USE THIS PROGRAM ?
 #  2) a) This program may be used in any country, in any geographic location of the planet Earth, in any marine or maritime environment, at sea, subsea, in a submarine, underground,
 #        in the air, in an airplane, dirigible, blimp, or balloon, and at any distance from the surface of the planet Earth, including in orbit about the Earth or the Moon,
-#        on a satellite orbiting about the Earth or about any planet, on any space transport vehicle, and anywhere in the solar system including the Moon, Mars, and all other solar system planets not listed.  
+#        on a satellite orbiting about the Earth, the Moon, about any Solar System planet and its moons, on any space transport vehicle, and anywhere in the Solar System including the Moon, Mars, and all other Solar System planets not listed.  
 #  2) b) This program may be used in any residential, commercial, business, and governmental property or location and in all public and private spaces. 
 #  2) c) This program may be used anywhere.
 #  IN WHAT CONTEXT OR CIRCUMSTANCES MAY A USER USE THIS PROGRAM?
@@ -115,19 +116,19 @@
 #  10) Any user of this program is not granted the freedom to obtain or retain intelectual property rights on this software as presented and agrees not to do so.
 #  11) a) Any user of this program may use this software as part of a patented process, as a substitutable input into the process; however the user agrees not to attempt to patent this software as part of their patented process. 
 #      b) This software is a tool, like a hammer, and may be used in a process which applies for and gains a patent, as a substitutable input into the process;
-#         however the software tool itself may not be included in the patent or covered in the patent as a novel invention, and the user agrees not to do this and not to attempt to do this.
+#         however the software tool itself may not be included in the patent or covered by the patent as a novel invention, and the user agrees not to do this and not to attempt to do this.
 #  WHO GRANTS THESE FREEDOMS ?
-#  10) The creators of this software are the original developer, and anyone listed as being a member of the Endwall Development Team, as well as ancillary contributors, and user modifiers and developers of the software. 
-#  11) The aformentioned freedoms of use listed in sections 4),5),6),and 7) are granted by the creators of this software and the Endwall Development Team to any qualifying user listed in section 1) and 
+#  10) The creators of this software are the original developer,"Endwall", and anyone listed as being a member of "The Endware Development Team", as well as ancillary contributors, and user modifiers and developers of the software. 
+#  11) The aformentioned freedoms of use listed in sections 4),5),6),and 7) are granted by the creators of this software and the Endware Development Team to any qualifying user listed in section 1) and 
 #      comporting with any restrictions and qualifications mentioned in sections 2), 3), 8), 9), 10) and 11) of this LICENSE AGREEMENT.
 #  WHAT RELATIONSHIP DO THE USERS HAVE WITH THE CREATORS OF THE SOFTWARE ?
 #  12)  This software is distributed without any warranty and without any guaranty and the creators do not imply anything about its usefulness or efficacy.
 #  13)  If the user suffers or sustains financial loss, informational loss, material loss, physical loss or data loss as a result of using, running, or modifying this software 
-#       the user agrees that they will hold the creators of this software, the "Endwall Development Team", and the programers involved in its creation, free from prosecution, 
+#       the user agrees that they will hold the creators of this software, "The Endware Development Team", "Endwall", and the programers involved in its creation, free from prosecution, 
 #       free from indemnity, and free from liability, and will not attempt to seek restitution or renumeration for any such loss real or imagined.
 #  END OF LICENSE AGREEMENT
 ##################################################################################################################################################################################
-#  ADDITIONAL NOTES:
+#  ADITIONAL NOTES:
 #  14)  If a user finds a significant flaw or makes a significant improvement to this software, please feel free to notify the original developers so that we may also
 #       include your user improvement in the next release; users are not obligated to do this, but we would enjoy this courtesy tremendously.
 #
