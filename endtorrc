@@ -1,15 +1,14 @@
 ####################################################################################################
 # TITLE: ENDTORRC
-# AUTHOR: THE ENDWARE DEVELOPMENT TEAM
+# AUTHOR: THE ENDWARE DEVELOPEMENT TEAM
 # CREATION DATE: MAY 31, 2016
-# VERSION: 0.03
-# REVISION DATE: Jun 2, 2016
-# COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016
+# VERSION: 0.04
+# REVISION DATE: JUN 7, 2016
+# COPYRIGHT: THE ENDWARE DEVELOPEMENT TEAM, 2016
 #
-# DESCRIPTION: A sample tor torrc-defaults configuration file to use with endware
+# DESCRIPTION: A sample tor configuration file to use with endware
 #
 # CHANGE LOG: - Tweaked some variables
-#             - Allow nodes from US,CA; this fixes some connection problems
 #             - Annotated file
 #             - Fixed Transport and DNSPort variables
 #
@@ -28,8 +27,8 @@
 #  or
 #  # rc-service tor start
 #
-#  # torsocks wget http://ix.io/NjZ 
-#  # mv NjZ torrc-defaults
+#  # torsocks wget http://ix.io/NZs 
+#  # mv NZs torrc-defaults
 #  # systemctl restart tor
 #  or
 #  # rc-service tor stop 
@@ -147,12 +146,12 @@ AutomapHostsOnResolve 1
 AutomapHostsSuffixes .exit, .onion
 FetchDirInfoEarly 1
 Sandbox 1
-KeepalivePeriod 180
+KeepalivePeriod 60
 CircuitPriorityHalflife 0
 ExcludeSingleHopRelays 1
-CircuitIdleTimeout 600
-CircuitBuildTimeout 60
-CircuitStreamTimeout 180
+CircuitIdleTimeout 300
+CircuitBuildTimeout 30
+CircuitStreamTimeout 120
 ClientOnly 1
 GeoIPExcludeUnknown 1
 EnforceDistinctSubnets 1
@@ -171,7 +170,7 @@ ClientDNSRejectInternalAddresses 1
 UpdateBridgesFromAuthority 1
 
 #DisableAllSwap 1 
-##Only works if starting tor as root
+#Only works if starting tor as root
 ##################################################################################################
 
 ###################################################################################################
@@ -179,20 +178,20 @@ UpdateBridgesFromAuthority 1
 ###################################################################################################
 ## TWEAK THE VARIABLES IN THE LINES BELOW   
 
-NumEntryGuards 20
-NumDirectoryGuards 20
+NumEntryGuards 30
+NumDirectoryGuards 30
 GuardLifetime 5 days
 
-NewCircuitPeriod 60
-MaxCircuitDirtiness 180
-PathsNeededToBuildCircuits 0.70
+NewCircuitPeriod 30
+MaxCircuitDirtiness 90
+PathsNeededToBuildCircuits 0.75
 
 #SafeSocks 1
 StrictNodes 1
-ExcludeNodes {??},{CU},{GB},{NZ},{AU},{CN},{TW},{RU},{UA},{AF},{IL},{IQ},{IR},{SA},{SY}
-ExcludeExitNodes {??},{US},{CA},{CU},{GB},{NZ},{AU},{CN},{TW},{RU},{UA},{AF},{IL},{IQ},{IR},{SA},{SY}
-EntryNodes {DE},{FR},{ES},{IT}
-ExitNodes {DE},{FR},{ES},{IT},{DK},{BE},{NL},{CH},{AT},{PL},{CZ}
+ExcludeNodes {??},{US},{CA},{GB},{AU},{NZ},{CN},{TW},{RU},{UA},{CU},{BY},{LT},{LV},{EE},{GE},{KZ},{IL},{IQ},{IR},{AF},{SA},{SY},{AM},{TR},{AZ},{LB},{JO},{EG}
+ExcludeExitNodes {??},{US},{CA},{GB},{AU},{NZ},{CN},{TW},{RU},{UA},{CU},{BY},{LT},{LV},{EE},{GE},{KZ},{IL},{IQ},{IR},{AF},{SA},{SY},{AM},{TR},{AZ},{LB},{JO},{EG}
+EntryNodes {DE},{FR},{ES},{IT},{IS},{GL},{NO},{SE},{DK},{NL},{BE},{AT},{PT},{AD},{MC},{LI},{MT},{GR}
+ExitNodes {DE},{FR},{ES},{IT},{DK},{BE},{NL},{CH},{AT},{PL},{CZ},{NO},{SE},{RO},{HU},{SI},{SK},{PT},{AD},{MC},{LI},{MT},{GR},{MA},{DZ},{TN},{JP}
 
 ####################################### BRIDGES ##############################################################
 #UseBridges 1
