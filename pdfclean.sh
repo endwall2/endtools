@@ -1,58 +1,101 @@
-####################################################################################################
-# TITLE: ENDTORRC
-# AUTHOR: THE ENDWARE DEVELOPEMENT TEAM
-# CREATION DATE: MAY 31, 2016
-# VERSION: 0.10
-# REVISION DATE: JUN 11, 2016
-# COPYRIGHT: THE ENDWARE DEVELOPEMENT TEAM, 2016
+#!/bin/sh
+######################################################################################
+# TITLE: pdfclean.sh
+# TYPE: Bourne Shell Script
+# DESCRIPTION: Cleans a pdf file
+# AUTHOR: THE ENDWARE DEVELOPMENT TEAM
+# COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016
+# CREATION DATE: JUN 3 2016
+# VERSION: 0.04 
+# REVISION DATE: JUN 10 2016
 #
-# DESCRIPTION: A sample tor configuration file to use with endware
+# CHANGE LOG: - Worked on instructions section + Added Acknowledgements + EULA
+#             - Commented out pdfcop
+#             - Commented out verapdf 
+#             - File Creation
+#####################################################################################
+# DEPENDENCIES: firejail, tor, torsocks, wget, perl-image-exiftool, qpdf, pdfid.py, ghostscript  
+#               libfaketime, faketime, date, pdfcop,verapdf
+#####################################################################################
+# INSTRUCTIONS: 
+#  STEP 1) RETRIEVE PACKAGES 
+# $ sudo pacman -S firejail gem tor torsocks qpdf git wget perl-image-exiftool ghostscript libfaketime
+# $ sudo apt-get install firejail gem tor torsocks qpdf git wget perl-image-exiftool ghostscript libfaketime
+# $ sudo yum install firejail gem tor torsocks qpdf git wget perl-image-exiftool ghostscript libfaketime
 #
-# CHANGE LOG: - Added {BH} to exclude + added ClientTransportPlugin lines to Bridges 
-#             - Added {PS},{VN},{KH},{LA} to exclude + added {KR},{JP},{CY} to exit
-#             - Removed {AT},{CH} double entry in exit nodes
-#             - Added the bridges from https://www.torproject.org/docs/bridges.html.en
-#             - Added countries + moved some sections to variable config 
-#             - Tweaked some variables
-#             - Annotated file
-#             - Fixed Transport and DNSPort variables
+#  STEP 2) MAKE SOME DIRECTORIES
+# $ mkdir ~/bin
+# $ mkdir ~/src
+# $ mkdir ~/git
+# $ export PATH=$PATH:/home/$USER/bin
 #
-###################################################################################################
-# DEPENDENCIES: tor,torsocks,obfsproxy and a working torrc and torrsocks.conf in /etc/tor/ or /usr/local/etc/tor
-####################################################################################################
-#                                    INSTRUCTIONS
-####################################################################################################
-#  Perform the following commands
-#  $ su
-#  # cd /etc/tor/   
-#  or
-#  # cd /usr/local/etc/tor/
+#  STEP 3) DOWNLOAD pdfid
+# $ cd ~/src
+# $ torsocks wget http://didierstevens.com/files/software/pdfid_v0_2_1.zip
+# $ unzip pdfid_v0_2_1.zip
+# $ cp *.py ~/bin
 # 
-#  # systemctl start tor
-#  or
-#  # rc-service tor start
+# STEP 3) INSTALL origami 
+# $ gem install origami 
+# $ gem install core_ext
+# $ gem install psych
 #
-#  # torsocks wget http://ix.io/Rwt 
-#  # mv Rwt torrc-defaults
-#  # systemctl restart tor
-#  or
-#  # rc-service tor stop 
-#  # rc-service tor start
+# STEP 4) DOWNLOAD the origami-pdf git && pdfcop  (Not Working)
+# $ cd ~/git 
+# $ torsocks git clone https://github.com/mobmewireless/origami-pdf.git 
+# $ cd ~/bin 
+# $ ln -s ~/git/origami-pdf/bin/pdfcop  pdfcop
+# $ ln -s ~/git/origami-pdf/bin/pdfmetadata  pdfmetadata
+# 
+# STEP 5) INSTAL mat  (Not Working)
+# $ cd ~/git
+# $ torsocks git clone https://github.com/jvoisin/MAT.git
+# $ cd ~/bin
+# $ ln -s ~/git/MAT/mat mat
+# $ torsocks pacman -S python2-poppler mutagen python-mutagen
 #
+# STEP 6) INSTALL verapdf  ( optional requires JAVA/ Untested)
+# $ cd ~/git
+# $ torsocks git clone https://github.com/veraPDF/veraPDF-apps.git
+# $ cd ~/git/veraPDF-apps/installer/src/main/scripts
+# $ ./verapdf.sh
+#
+# STEP 7) Download pdf file with safedown
+# $ safedown http://www.website.com/strange.pdf 
+#
+# STEP 8) Get and configure pdfclean.sh
+# $ cd ~/bin
+# $ wget http://ix.io/StD
+# $ mv Std pdfclean
+# $ chmod u+rwx pdfclean  
+#
+# STEP 9) Safemode / firejail
+# $ firejail --protocol=unix  --private-tmp --private-etc=localtime --nogroups --net=none
+# $ cd /dev/shm/temp
+# or
+# $ safemode
+# STEP 10) Clean the pdf that was downloaded
+# $ pdfclean strange.pdf
+# 
+# STEP 11) Open file with pdfviewer while in safemode
+# $ epdfview strandge.clean.pdf
+########################################################################################
 ##############################################################################################################################################
 #                                         ACKNOWLEDGEMENTS
 ##############################################################################################################################################
 #  The Endware Development Team would like to acknowledge the work and efforts of OdiliTime, who graciously hosted and promoted this software project.
-#  Without his efforts and his wonderful website www.endchan.xyz , the Endware Suite including Endwall would not
-#  exist in the public domain at all in any form. So thanks to OdiliTime for inspiring this work and for hosting and promoting it. 
+#  Without his efforts and his wonderful website www.endchan.xyz , the Endware Suite would not exist in the public domain at all in any form. 
+#  So thanks to OdiliTime for inspiring this work and for hosting and promoting it. 
 #  
 #  The Endware Suite including Endwall,Endsets,Endlists,Endtools, Endloads and Endtube are named in honor of Endchan.
 #
-#  Thank you also to early beta testers including a@a, and to other contributors 
-#  as well as to the detractors who helped to critique this work and to ultimately improve it.  
+#  I would like to acknowledge that the source of the ideas presented in pdfclean.sh are from an anonymous tech expert poster on www.endchan.xyz   
+#  These ideas were originally posted in the thread https://www.endchan.xyz/tech/res/4506.html
+#  This poster wants you to learn more about PDF/A, and de-weaponizing PDF's in general, and would 
+#  like for users not use set and forget methods, as no one tool works for all situations. 
+#  Use this file at your own risk and discretion.
 #  
-#  We also acknowledge paste.debian.net, ix.io and gitweb for their hosting services, 
-#  without which distribution would be limited, so thank you.
+#  We also acknowledge paste.debian.net, ix.io and gitweb for their hosting services, without which distribution would be limited, so thank you.
 #
 #  https://www.endchan.xyz, http://paste.debian.net, http://gitweb2zl5eh7tp3.onion , http://ix.io  
 #
@@ -137,100 +180,40 @@
 #       This would be deemed unacceptable and is specifically rejected by the enumeration presented.  If the wording presented is problematic please contact us and suggest a change,
 #       and it will be taken into consideration.  
 #################################################################################################################################################################################
+####################################               BEGINNING OF PROGRAM              ########################################################################
+file=$1
+rt=$( echo "$file" | cut -d . -f 1 ) 
 
-##########################################  BEGINING OF CONFIGURATION  ###########################################
-#############################################################################################################
-#                                     MAIN CONFIGURATION 
-#############################################################################################################
+exiftool -all= "$file" 
 
-###################################    BINARY SWITCHES     ####################################
-AutomapHostsOnResolve 1
-AutomapHostsSuffixes .exit, .onion
-FetchDirInfoEarly 1
-CircuitPriorityHalflife 0
-ExcludeSingleHopRelays 1
-ClientOnly 1
-GeoIPExcludeUnknown 1
-EnforceDistinctSubnets 1
-UseEntryGuards 1
-UseEntryGuardsAsDirGuards 1
-FastFirstHopPK 0
-AllowSingleHopCircuits 0
-Tor2webMode 0
-FetchServerDescriptors 1
-FetchHidServDescriptors 1
-FetchUselessDescriptors 1
-UseNTorHandshake 1
-UseMicrodescriptors 1
-ClientRejectInternalAddresses 1
-ClientDNSRejectInternalAddresses 1
-UpdateBridgesFromAuthority 1
+qpdf --suppress-recovery --object-streams=generate --decrypt --linearize "$file" "$file"_sane 
 
-Sandbox 1
-## Comment out to use transparent proxying/plugable transports 
-StrictNodes 1
-## Comment out or set to 0 if connection problems to hidden services
-#SafeSocks 1
-## Comment out or set to 0 for http proxy work (youtube-dl, curl, wget)
-#DisableAllSwap 1 
-##Only works if starting tor as root
-################################  DNS/TRANSPROXY/SOCKS LISTENERS  ##################################
+# set pdfmark with metadata
+echo "[ /Producer () /DOCINFO pdfmark ]" > pdfmark 
+LANG=C 
+TZ=UTC 
+faketime "1970-01-01 00:00:00 UTC" /bin/date
+# reconstruct file with ghostscript
+gs -dPDFA=2 -dColorConversionStrategy=/UseDeviceIndependentColor -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sProcessColorModel=DeviceCMYK -dPDFACompatibilityPolicy=1 -sOutputFile="${file%.*}".clean.pdf "$file"_sane "$(pwd)"/pdfmark 
 
-## Transparent Proxying 
-## Set Sandbox 0 or comment out Sandbox 1 to use
-#Transport 9040
-#TransListenAddress 127.0.0.1
+## Add this back in  if you have a custom PDFA_def.ps file
+#/path/to/custom/PDFA_def.ps "$file"_sane "$(pwd)"/pdfmark 
 
-## DNS Listening Port to resolve DNS via the tor network ( use with dnsmasq)
-DNSPort 9053
-DNSListenAddress 127.0.0.1
+## VERAPDF ##  JAVA required
+#verapdf --flavour 2b --format text "$rt".clean.pdf 2>/dev/null PASS /dev/shm/temp/"$rt".clean.pdf 
 
-###################################################################################################
-#                                     VARIABLE CONFIGURATION
-###################################################################################################
-## ADJUST THE VARIABLES IN THE LINES BELOW TO YOUR NEEDS   
+##  PDFCOP ## INSTALL NOT WORKING 
+#pdfcop -p paranoid "$rt".clean.pdf    
+#pdfcop -p paranoid "$rt".clean.pdf | grep policy
 
-NumEntryGuards 400
-NumDirectoryGuards 400
-GuardLifetime 3 days
+## observe data types post cleaning/ reconstruction
+pdfid.py "$rt".clean.pdf 
+## observe the metadata post cleaning/ reconstruction
+pdfmetadata "$rt".clean.pdf
 
-KeepalivePeriod 60
-CircuitIdleTimeout 60
-CircuitBuildTimeout 15
-CircuitStreamTimeout 90
+## delete intermediary files
+rm "$file"_sane
+rm pdfmark
+exit 0
 
-NewCircuitPeriod 15
-MaxCircuitDirtiness 90
-PathsNeededToBuildCircuits 0.75
-
-ExcludeNodes {??},{US},{CA},{GB},{AU},{NZ},{ZA},{CN},{MN},{KP},{TW},{VN},{KH},{LA},{RU},{UA},{CU},{BY},{LT},{LV},{EE},{GE},{KZ},{UZ},{TJ},{IL},{PS},{IQ},{IR},{AF},{SA},{SY},{AM},{TR},{AZ},{LB},{JO},{EG},{LY},{AE},{YE},{KW},{BH},{KG},{OM},{QA},{TM},{PK},{SD},{SS},{ET},{SO},{ER}
-ExcludeExitNodes {??},{US},{CA},{GB},{AU},{NZ},{ZA},{CN},{MN},{KP},{TW},{VN},{KH},{LA},{RU},{UA},{CU},{BY},{LT},{LV},{EE},{GE},{KZ},{UZ},{TJ},{IL},{PS},{IQ},{IR},{AF},{SA},{SY},{AM},{TR},{AZ},{LB},{JO},{EG},{LY},{AE},{YE},{KW},{BH},{KG},{OM},{QA},{TM},{PK},{SD},{SS},{ET},{SO},{ER}
-EntryNodes {DE},{AT},{FR},{CH},{ES},{PT},{IT},{VA},{IS},{GL},{DK},{BE},{NL},{NO},{SE},{PL},{CZ},{AD},{MC},{LI},{MT},{GR}
-ExitNodes {DE},{AT},{FR},{CH},{ES},{PT},{IT},{VA},{IS},{GL},{DK},{BE},{NL},{NO},{SE},{PL},{CZ},{AD},{MC},{LI},{MT},{GR},{CY},{FI},{RO},{HU},{SI},{SK},{MA},{DZ},{TN},{MD},{AL},{MK},{ME},{RS},{HR},{BG},{BA},{IN},{KR},{JP}
-
-#######################################    BRIDGES    #########################################################
-## To use bridges comment out EntryNodes and ExcludeNodes, and install obfsproxy  (apt-get install obfsproxy)
-## Uncomment transparent lines in listener section and comment out Sandbox 1
-## Bridge [transport] IP:ORPort [fingerprint]
-## To get new bridges go to https://bridges.torproject.org/options 
-#
-#ClientTransportPlugin socks4 socks4 127.0.0.1:9050
-#ClientTransportPlugin socks5 socks5 127.0.0.1:9050
-#ClientTransportPlugin obfs2 exec /usr/bin/obfsproxy obfs2 --proxy 127.0.0.1:9040
-#ClientTransportPlugin obfs3 exec /usr/bin/obfsproxy obfs3 --proxy 127.0.0.1:9040
-#ClientTransportPlugin scramblesuit exec /usr/bin/obfsproxy scramblesuit --proxy 127.0.0.1:9040
-#
-#UseBridges 1
-#Bridge obfs3 60.16.182.53:9001 cc8ca10a63aae8176a52ca5129ce816d011523f5
-#Bridge obfs3 60.63.97.221:443 daa5e435819275f88d695cb7fce73ed986878cf3
-#Bridge obfs3 141.201.27.48:443 4352e58420e68f5e40bf7c74faddccd9d1349413
-#Bridge obfs3 41.223.53.119:443 5D9EC3D063D7F8FE6B4F150ABF11F2F883D48136
-#
-####################################   RATE LIMITING  ######################################################
-BandwidthRate  1 MByte
-BandwidthBurst 1 MByte
-#PerConnBWRate  1 MBytes
-#PerConnBWBurst 1 MBytes
-#RelayBandwidthRate  1 MBytes
-#RelayBandwidthBurst 1 MBytes
-#################################   END  OF CONFIGURATION  ###################################################
+####################################                END OF PROGRAM                ##########################################################################

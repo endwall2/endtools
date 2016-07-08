@@ -1,31 +1,34 @@
 #!/bin/sh
 #################################################################################################################################################
-# NAME: endcurl.sh
+# NAME: proxyload.sh
 # TYPE: BOURNE SHELL SCRIPT
-# DESCRIPTION: Download http website using curl, torsocks,and a random user agent
+# DESCRIPTION: Fetch fresh ssl and socks5 proxies for use with endtube.
 #
-# AUTHOR:  THE ENDWALL DEVELOPMENT TEAM
-# CREATION DATE:   APRIL 9 2016
-# VERSION: 0.11
-# REVISION DATE: MAY 24 2015
-# COPYRIGHT: THE ENDWALL DEVELOPMENT TEAM, 2016 
+# AUTHOR:  ENDWALL DEVELOPEMENT TEAM
+# CREATION DATE: JUNE 15 2016
+# VERSION: 0.06
+# REVISION DATE: JUNE 27 2015
 # 
-# CHANGE LOG:  - Forked from endloads
-#              - Added extra user-agents
-#              - Forked from endtube
+# CHANGE LOG:  - Fixed instructions
+#              - Removed unused code and annotated code
+#              - Simplified grep chain, abstracted website names to variables 
+#              - Added wildcard numbers for grep
+#              - Added ssl proxies and socks proxies  
+#              - Forked from endcurl
 #
 ########################################################################################################################################
-# DEPENDENCIES: torsocks,wget,od,head,urandom,sleep
+# DEPENDENCIES: tor,torsocks,curl,od,head,urandom,sleep,grep
 ########################################################################################################################################
 # INSTRUCTIONS: Make a bin directory in ~/ add it to the path. Copy this file there and make executable.
 #               Start the TOR daemon. Execute the script.    
 #   
 #  Do the following at a command prompt
-#
+#  $  wget http://ix.io/VTZ
+#  $  cp VTZ proxyload.sh
 #  $  mkdir ~/bin
-#  $  chmod u+wrx endcurl.sh
-#  $  cp endcurl.sh ~/bin/endcurl
-#  $  export PATH=$PATH:~/bin
+#  $  chmod u+wrx proxyload.sh
+#  $  cp proxyload.sh ~/bin/proxyload
+#  $  export PATH=$PATH:/home/$USER/bin
 # 
 #  START TOR DAEMON:
 #     SYSTEMD:
@@ -35,9 +38,11 @@
 #  $ sudo rc-update add tor default
 #  $ sudo rc-service start tor
 #  $ sudo rc-status
+#    STAND ALONE:
+#  $ tor_alpha &
 #      
-#     Run EndCurl 
-#  $  endcurl http://www.google.com
+#     Run ProxyLoad 
+#  $ proxyload
 #  
 ############################################################################################################################################################################
 #                                       ACKNOWLEDGEMENTS
@@ -50,9 +55,9 @@
 #
 #  Thank you also to early beta testers including a@a, and to other contributors as well as to the detractors who helped to critique this work and to ultimately improve it.  
 #  
-#  We also acknowledge paste.debian.net and gitweb for their hosting services, without which distribution would be limited / impossible, so thank you.
+#  We also acknowledge paste.debian.net, ix.io and gitweb for their hosting services, without which distribution would be limited / impossible, so thank you.
 #
-#  https://www.endchan.xyz, http://paste.debian.net, http://gitweb2zl5eh7tp3.onion  
+#  https://www.endchan.xyz, http://paste.debian.net, http://gitweb2zl5eh7tp3.onion , http://ix.io 
 #
 #  We salute you! 
 #  
@@ -135,13 +140,23 @@
 #       This would be deemed unacceptable and is specifically rejected by the enumeration presented.  If the wording presented is problematic please contact us and suggest a change,
 #       and it will be taken into consideration.  
 #################################################################################################################################################################################
-
 #####################################################        BEGINNING OF PROGRAM      #####################################################################################
 ##  get input list from shell argument 
 
-link=$1
 nargs="$#"
 
+## proxy list websites
+ssl_site="http://sslproxies24.blogspot.com"
+socks_site="http://www.vipsocks24.net"
+
+## remove .com .net ending 
+ssl_site_rt=$( echo "$ssl_site" | cut -d . -f 1,2 | awk '{print $1}' )
+socks_site_rt=$( echo "$socks_site" | cut -d . -f 1,2 | awk '{print $1}' )
+
+## temporary files to store downloads
+holder_1=temp_1.txt
+holder_2=temp_2.txt
+holder_3=temp_3.txt
 
 #select random user agent
  
@@ -235,18 +250,55 @@ else
 fi
 echo "$UA"
 
-# generate a random number time delay
-#delay=$( expr 10 + $(head -c 2 /dev/urandom | od -A n -i) % 120 | awk '{print $1}')
-#echo "Delaying download for "$delay" seconds"
-# wait by delay time
-#sleep "$delay"
+echo "Downloading SSL Proxies"
 
-echo "Downloading "$link""
-# initiate download and change user agent
+cc="com"
+torsocks curl -A "$UA" "$ssl_site_rt"."$cc" | grep "Free" | grep "html" | grep -v "title" >> "$holder_1" 
 
-# initate curl download +tor + random agent
-torsocks curl -A "$UA" $1 
+## while loop to pick up country code
+cc=" "
+while [ "$cc" == " " ];do
+cc=$(torsocks curl -A "$UA" "$ssl_site" | grep "The document"  | cut -d / -f 3 | cut -d . -f 3 )
+sleep 1
+done
+echo "Country Code is "$cc" "
+
+## get the URLs hosting the proxy lists and parse
+
+torsocks curl -A "$UA" "$ssl_site_rt"."$cc" | grep "Free" | grep "html" | grep -v "title" >> "$holder_1" 
+
+cut -d '>' -f 1 "$holder_1" | cut -d ':' -f 2 | cut -d '.' -f 3 | sort -u > "$holder_2"
+
+## download the proxies then numeric sort and remove duplicates
+for link in $(cat "$holder_2") ; do
+torsocks curl -A "$UA" "$ssl_site_rt"."$link".html| grep "[0123456789]:[123456789][0123456789]" >> "$holder_3"
+done 
+
+sort -nu "$holder_3" >> ssl_proxies.txt
+
+## remove temporary files
+rm "$holder_1"
+rm "$holder_2"
+rm "$holder_3"
+
+echo "Downloading Socks5 Proxies"
+
+## get the URLs hosting the proxy lists and parse
+cc="net"
+torsocks curl -A "$UA" "$socks_site_rt"."$cc" | grep "VIP" | grep "html" | grep -v "title" > "$holder_1" 
+cut -d '>' -f 1 "$holder_1" | cut -d ':' -f 2 | cut -d '.' -f 3 > "$holder_2"
+
+## Download the proxies then numeric sort and remove duplicates
+for link in $(cat "$holder_2") ; do
+torsocks curl -A "$UA" "$socks_site_rt"."$link".html| grep -ah "[0123456789]:[123456789][0123456789]" >> "$holder_3"
+done 
+
+sort -nu "$holder_3" >> socks_proxies.txt
+
+## remove temporary files
+rm "$holder_1"
+rm "$holder_2"
+rm "$holder_3"
 
 exit 0
-#########################################################        END OF PROGRAM         ######################################################################################
- 
+#########################################################        END OF PROGRAM         ###################################################################################

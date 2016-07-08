@@ -1,50 +1,36 @@
-####################################################################################################
-# TITLE: ENDTORRC
-# AUTHOR: THE ENDWARE DEVELOPEMENT TEAM
-# CREATION DATE: MAY 31, 2016
-# VERSION: 0.10
-# REVISION DATE: JUN 11, 2016
-# COPYRIGHT: THE ENDWARE DEVELOPEMENT TEAM, 2016
+#!/bin/sh
+######################################################################################
+# TITLE: safemode.sh
+# TYPE: Bourne Shell Script
+# DESCRIPTION: enters jail in /dev/shm/temp with no internet
+# AUTHOR: THE ENDWARE DEVELOPMENT TEAM
+# COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016
+# CREATION DATE: JUN 3 2016
+# VERSION: 0.02 
+# REVISION DATE: JUN 10 2016
 #
-# DESCRIPTION: A sample tor configuration file to use with endware
+# CHANGE LOG: - Forked from safedl
+#             - File Creation
 #
-# CHANGE LOG: - Added {BH} to exclude + added ClientTransportPlugin lines to Bridges 
-#             - Added {PS},{VN},{KH},{LA} to exclude + added {KR},{JP},{CY} to exit
-#             - Removed {AT},{CH} double entry in exit nodes
-#             - Added the bridges from https://www.torproject.org/docs/bridges.html.en
-#             - Added countries + moved some sections to variable config 
-#             - Tweaked some variables
-#             - Annotated file
-#             - Fixed Transport and DNSPort variables
+#####################################################################################
+# DEPENDANCIES: firejail
+#####################################################################################
+# INSTRUCTIONS: 
+#  STEP 1) MAKE SOME DIRECTORIES
+# $ mkdir ~/bin
+# $ cp http://ix.io/Nfg ~/bin/safemode
+# $ export PATH=$PATH:/home/$USER/bin
 #
-###################################################################################################
-# DEPENDENCIES: tor,torsocks,obfsproxy and a working torrc and torrsocks.conf in /etc/tor/ or /usr/local/etc/tor
-####################################################################################################
-#                                    INSTRUCTIONS
-####################################################################################################
-#  Perform the following commands
-#  $ su
-#  # cd /etc/tor/   
-#  or
-#  # cd /usr/local/etc/tor/
-# 
-#  # systemctl start tor
-#  or
-#  # rc-service tor start
+#  STEP 2) RUN safemode
 #
-#  # torsocks wget http://ix.io/Rwt 
-#  # mv Rwt torrc-defaults
-#  # systemctl restart tor
-#  or
-#  # rc-service tor stop 
-#  # rc-service tor start
-#
-##############################################################################################################################################
+# $ safemode 
+########################################################################################
+#######################################################################################################################################################
 #                                         ACKNOWLEDGEMENTS
-##############################################################################################################################################
+#######################################################################################################################################################
 #  The Endware Development Team would like to acknowledge the work and efforts of OdiliTime, who graciously hosted and promoted this software project.
-#  Without his efforts and his wonderful website www.endchan.xyz , the Endware Suite including Endwall would not
-#  exist in the public domain at all in any form. So thanks to OdiliTime for inspiring this work and for hosting and promoting it. 
+#  Without his efforts and his wonderful website www.endchan.xyz , the Endware Suite would not exist in the public domain at all in any form. 
+#  So thanks to OdiliTime for inspiring this work and for hosting and promoting it. 
 #  
 #  The Endware Suite including Endwall,Endsets,Endlists,Endtools, Endloads and Endtube are named in honor of Endchan.
 #
@@ -61,7 +47,7 @@
 #  In the end, may it all end well.
 #
 #  The Endware Development Team
-##############################################################################################################################################
+######################################################################################################################################################
 ##############################################################################################################################################################################
 #                                                              LICENSE AGREEMENT  
 ##############################################################################################################################################################################
@@ -138,99 +124,10 @@
 #       and it will be taken into consideration.  
 #################################################################################################################################################################################
 
-##########################################  BEGINING OF CONFIGURATION  ###########################################
-#############################################################################################################
-#                                     MAIN CONFIGURATION 
-#############################################################################################################
+#################################   BEGINNING OF PROGRAM   ############################################
 
-###################################    BINARY SWITCHES     ####################################
-AutomapHostsOnResolve 1
-AutomapHostsSuffixes .exit, .onion
-FetchDirInfoEarly 1
-CircuitPriorityHalflife 0
-ExcludeSingleHopRelays 1
-ClientOnly 1
-GeoIPExcludeUnknown 1
-EnforceDistinctSubnets 1
-UseEntryGuards 1
-UseEntryGuardsAsDirGuards 1
-FastFirstHopPK 0
-AllowSingleHopCircuits 0
-Tor2webMode 0
-FetchServerDescriptors 1
-FetchHidServDescriptors 1
-FetchUselessDescriptors 1
-UseNTorHandshake 1
-UseMicrodescriptors 1
-ClientRejectInternalAddresses 1
-ClientDNSRejectInternalAddresses 1
-UpdateBridgesFromAuthority 1
+mkdir -p /dev/shm/temp
+cd /dev/shm/temp
+firejail --noprofile --protocol=unix  --private-tmp --private-etc=localtime --nogroups --net=none 
 
-Sandbox 1
-## Comment out to use transparent proxying/plugable transports 
-StrictNodes 1
-## Comment out or set to 0 if connection problems to hidden services
-#SafeSocks 1
-## Comment out or set to 0 for http proxy work (youtube-dl, curl, wget)
-#DisableAllSwap 1 
-##Only works if starting tor as root
-################################  DNS/TRANSPROXY/SOCKS LISTENERS  ##################################
-
-## Transparent Proxying 
-## Set Sandbox 0 or comment out Sandbox 1 to use
-#Transport 9040
-#TransListenAddress 127.0.0.1
-
-## DNS Listening Port to resolve DNS via the tor network ( use with dnsmasq)
-DNSPort 9053
-DNSListenAddress 127.0.0.1
-
-###################################################################################################
-#                                     VARIABLE CONFIGURATION
-###################################################################################################
-## ADJUST THE VARIABLES IN THE LINES BELOW TO YOUR NEEDS   
-
-NumEntryGuards 400
-NumDirectoryGuards 400
-GuardLifetime 3 days
-
-KeepalivePeriod 60
-CircuitIdleTimeout 60
-CircuitBuildTimeout 15
-CircuitStreamTimeout 90
-
-NewCircuitPeriod 15
-MaxCircuitDirtiness 90
-PathsNeededToBuildCircuits 0.75
-
-ExcludeNodes {??},{US},{CA},{GB},{AU},{NZ},{ZA},{CN},{MN},{KP},{TW},{VN},{KH},{LA},{RU},{UA},{CU},{BY},{LT},{LV},{EE},{GE},{KZ},{UZ},{TJ},{IL},{PS},{IQ},{IR},{AF},{SA},{SY},{AM},{TR},{AZ},{LB},{JO},{EG},{LY},{AE},{YE},{KW},{BH},{KG},{OM},{QA},{TM},{PK},{SD},{SS},{ET},{SO},{ER}
-ExcludeExitNodes {??},{US},{CA},{GB},{AU},{NZ},{ZA},{CN},{MN},{KP},{TW},{VN},{KH},{LA},{RU},{UA},{CU},{BY},{LT},{LV},{EE},{GE},{KZ},{UZ},{TJ},{IL},{PS},{IQ},{IR},{AF},{SA},{SY},{AM},{TR},{AZ},{LB},{JO},{EG},{LY},{AE},{YE},{KW},{BH},{KG},{OM},{QA},{TM},{PK},{SD},{SS},{ET},{SO},{ER}
-EntryNodes {DE},{AT},{FR},{CH},{ES},{PT},{IT},{VA},{IS},{GL},{DK},{BE},{NL},{NO},{SE},{PL},{CZ},{AD},{MC},{LI},{MT},{GR}
-ExitNodes {DE},{AT},{FR},{CH},{ES},{PT},{IT},{VA},{IS},{GL},{DK},{BE},{NL},{NO},{SE},{PL},{CZ},{AD},{MC},{LI},{MT},{GR},{CY},{FI},{RO},{HU},{SI},{SK},{MA},{DZ},{TN},{MD},{AL},{MK},{ME},{RS},{HR},{BG},{BA},{IN},{KR},{JP}
-
-#######################################    BRIDGES    #########################################################
-## To use bridges comment out EntryNodes and ExcludeNodes, and install obfsproxy  (apt-get install obfsproxy)
-## Uncomment transparent lines in listener section and comment out Sandbox 1
-## Bridge [transport] IP:ORPort [fingerprint]
-## To get new bridges go to https://bridges.torproject.org/options 
-#
-#ClientTransportPlugin socks4 socks4 127.0.0.1:9050
-#ClientTransportPlugin socks5 socks5 127.0.0.1:9050
-#ClientTransportPlugin obfs2 exec /usr/bin/obfsproxy obfs2 --proxy 127.0.0.1:9040
-#ClientTransportPlugin obfs3 exec /usr/bin/obfsproxy obfs3 --proxy 127.0.0.1:9040
-#ClientTransportPlugin scramblesuit exec /usr/bin/obfsproxy scramblesuit --proxy 127.0.0.1:9040
-#
-#UseBridges 1
-#Bridge obfs3 60.16.182.53:9001 cc8ca10a63aae8176a52ca5129ce816d011523f5
-#Bridge obfs3 60.63.97.221:443 daa5e435819275f88d695cb7fce73ed986878cf3
-#Bridge obfs3 141.201.27.48:443 4352e58420e68f5e40bf7c74faddccd9d1349413
-#Bridge obfs3 41.223.53.119:443 5D9EC3D063D7F8FE6B4F150ABF11F2F883D48136
-#
-####################################   RATE LIMITING  ######################################################
-BandwidthRate  1 MByte
-BandwidthBurst 1 MByte
-#PerConnBWRate  1 MBytes
-#PerConnBWBurst 1 MBytes
-#RelayBandwidthRate  1 MBytes
-#RelayBandwidthBurst 1 MBytes
-#################################   END  OF CONFIGURATION  ###################################################
+################################   END OF PROGRAM   ####################################################

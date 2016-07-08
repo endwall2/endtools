@@ -1,21 +1,22 @@
 #!/bin/sh
 #################################################################################################################################################
-# NAME: endcurl.sh
+# NAME: proxycheck.sh
 # TYPE: BOURNE SHELL SCRIPT
-# DESCRIPTION: Download http website using curl, torsocks,and a random user agent
+# DESCRIPTION: Checks Fetched proxies for use in endtube.
 #
-# AUTHOR:  THE ENDWALL DEVELOPMENT TEAM
-# CREATION DATE:   APRIL 9 2016
-# VERSION: 0.11
-# REVISION DATE: MAY 24 2015
-# COPYRIGHT: THE ENDWALL DEVELOPMENT TEAM, 2016 
+# AUTHOR:  ENDWALL DEVELOPEMENT TEAM
+# CREATION DATE: JUNE 10 2016
+# VERSION: 0.07
+# REVISION DATE: JUNE 30 2015
 # 
-# CHANGE LOG:  - Forked from endloads
-#              - Added extra user-agents
-#              - Forked from endtube
+# CHANGE LOG:  - Output results incrementally
+#              - Updated to check proxy output using awk
+#              - Forked from proxyload
+#              - Added ssl proxies and socks proxies  
+#              - Forked from endcurl
 #
 ########################################################################################################################################
-# DEPENDENCIES: torsocks,wget,od,head,urandom,sleep
+# DEPENDENCIES: torsocks,curl,od,head,urandom,sleep,awk
 ########################################################################################################################################
 # INSTRUCTIONS: Make a bin directory in ~/ add it to the path. Copy this file there and make executable.
 #               Start the TOR daemon. Execute the script.    
@@ -23,10 +24,13 @@
 #  Do the following at a command prompt
 #
 #  $  mkdir ~/bin
-#  $  chmod u+wrx endcurl.sh
-#  $  cp endcurl.sh ~/bin/endcurl
+#  $  chmod u+wrx proxycheck.sh
+#  $  cp proxycheck.sh ~/bin/proxycheck
 #  $  export PATH=$PATH:~/bin
 # 
+#  $ mkdir ~/proxies
+#  $ cd ~/proxies
+#
 #  START TOR DAEMON:
 #     SYSTEMD:
 #  $ sudo systemctl start tor
@@ -35,10 +39,14 @@
 #  $ sudo rc-update add tor default
 #  $ sudo rc-service start tor
 #  $ sudo rc-status
-#      
-#     Run EndCurl 
-#  $  endcurl http://www.google.com
-#  
+#    STAND ALONE:
+#  $ tor_alpha  
+#     Run Proxyload 
+#  $ proxyload
+#     Run Proxycheck on output
+#
+#  $ proxycheck ssl_proxies.txt  
+#  $ proxycheck socks_proxies.txt
 ############################################################################################################################################################################
 #                                       ACKNOWLEDGEMENTS
 ############################################################################################################################################################################
@@ -135,13 +143,32 @@
 #       This would be deemed unacceptable and is specifically rejected by the enumeration presented.  If the wording presented is problematic please contact us and suggest a change,
 #       and it will be taken into consideration.  
 #################################################################################################################################################################################
-
 #####################################################        BEGINNING OF PROGRAM      #####################################################################################
 ##  get input list from shell argument 
 
-link=$1
 nargs="$#"
+infile=$1
 
+if [ "$infile" == ssl_proxies.txt ] ; then 
+holder_1=ssl_google.tmp
+holder_2=ssl_youtube.tmp
+outfile_1=ssl_proxies_gg_redir.txt
+outfile_2=ssl_proxies_gg.txt
+outfile_3=ssl_proxies_yt.txt
+elif [ "$infile" == socks_proxies.txt ] ; then 
+holder_1=socks_google.tmp
+holder_2=socks_youtube.tmp
+outfile_1=socks_proxies_google.txt
+outfile_2=socks_proxies_youtube.txt
+else
+echo "USAGE:  $ proxycheck ssl_proxies.txt"
+echo "USAGE:  $ proxycheck socks_proxies.txt"
+exit 1
+fi
+
+
+## MAIN LOOP
+for proxy in $(cat "$infile") ; do
 
 #select random user agent
  
@@ -235,18 +262,71 @@ else
 fi
 echo "$UA"
 
-# generate a random number time delay
-#delay=$( expr 10 + $(head -c 2 /dev/urandom | od -A n -i) % 120 | awk '{print $1}')
-#echo "Delaying download for "$delay" seconds"
-# wait by delay time
-#sleep "$delay"
+##generate a random number time delay
+delay=$( expr 5 + $(head -c 2 /dev/urandom | od -A n -i) % 10 | awk '{print $1}')
+echo "Delaying download for "$delay" seconds"
+## wait by delay time
+sleep "$delay"
 
-echo "Downloading "$link""
-# initiate download and change user agent
+if [ "$infile" == ssl_proxies.txt ] ; then 
 
-# initate curl download +tor + random agent
-torsocks curl -A "$UA" $1 
+echo "$proxy" 
+echo "PROXY: "$proxy"" > "$holder_1"
+torsocks curl -A "$UA" --proxy "$proxy"  https://www.google.com >> "$holder_1"
+echo "PROXY: "$proxy"" >> "$holder_1" 
+echo "PROXY: "$proxy"" > "$holder_2" 
+torsocks curl -A "$UA" --proxy "$proxy"  https://www.youtube.com >> "$holder_2"
+echo "PROXY: "$proxy"" >> "$holder_2" 
+echo "$proxy" 
+echo " " 
+
+## NOW FILTER THE RESULTS FOR WORKING PROXIES
+
+## capture working redirects
+awk '{ if ($0 ~ /The document/) i=NR; if (NR == i+3) {print $2} }' "$holder_1" >> "$outfile_1"
+## capture working google hits
+awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /Search the world/ ) {print prxy} }' "$holder_1" >> "$outfile_1"
+## capture working youtube hits
+awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /ytbuffer/ ) {print prxy} }' "$holder_2" >> "$outfile_2"
+
+elif [ "$infile" == socks_proxies.txt ] ; then 
+echo "$proxy" 
+echo "PROXY: "$proxy"" > "$holder_1"
+torsocks curl -A "$UA" --socks5 "$proxy"  https://www.google.com >> "$holder_1"
+echo "PROXY: "$proxy"" >> "$holder_1" 
+echo "PROXY: "$proxy"" > "$holder_2" 
+torsocks curl -A "$UA" --socks5 "$proxy"  https://www.youtube.com >> "$holder_2"
+echo "PROXY: "$proxy"" >> "$holder_2" 
+echo "$proxy" 
+echo " " 
+
+## NOW FILTER THE RESULTS FOR WORKING PROXIES
+
+## capture working redirects
+awk '{ if ($0 ~ /The document/) i=NR; if (NR == i+3) {print $2} }' "$holder_1" >> "$outfile_1"
+## capture working google hits
+awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /Search the world/ ) {print prxy} }' "$holder_1" >> "$outfile_1"
+## capture working youtube hits
+awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /ytbuffer/ ) {print prxy} }' "$holder_2" >> "$outfile_2"
+
+else 
+
+echo "USAGE:  $ proxycheck ssl_proxies.txt"
+echo "USAGE:  $ proxycheck socks_proxies.txt"
+
+exit 1
+
+fi
+
+done 
+############## END MAIN LOOP
+
+echo "Proxies Checked"
+
+rm "$holder_1"
+rm "$holder_2"
+
+date
 
 exit 0
-#########################################################        END OF PROGRAM         ######################################################################################
- 
+#########################################################        END OF PROGRAM         ###################################################################################
