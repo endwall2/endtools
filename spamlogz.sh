@@ -4,19 +4,19 @@
 # Type: Bourne shell script
 # Author: The Endware Development Team
 # Creation Date: February 13, 2016
-# Version: 1.07
-# Revision Date: June 04, 2016
+# Version: 1.08
+# Revision Date: July 08, 2016
 # Copyright: The Endware Development Team 2016
 ######################################################################################################################################################################
 # Description: Print log file of flagged terms
 # Notes: invoke with root privalage
 #
-# Change Log: - Updated EULA
+# Change Log: - Fixed flags to match endlists.sh endsets.sh
+#             - Updated EULA
 #             - Added tor-bl flag
 #             - Changed program name to spamlogz
 #             - Updated EULA
 #             - Added EULA
-#             - Fixed flags to match endset.sh
 #
 # Instructions: $ chmod u+rwx spamalertz.sh
 # Examples:     $ su
