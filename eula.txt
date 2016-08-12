@@ -63,8 +63,8 @@
 #       the user agrees that they will hold the creators of this software, "The Endware Development Team", "Endwall", and the programers involved in its creation, free from prosecution, 
 #       free from indemnity, and free from liability, and will not attempt to seek restitution, compenstation, or payment for any such loss real or imagined.
 #  14)  If a user makes a significant improvement to this software, and if this improvement is included in a release, the user agrees not to seek remuneration or payment 
-#       from the creators of this software or from Endwall or from the Endware Development Team, for any such work contribution performed, 
-#       and the user understands that there will be no such remuneration or payment rendered to them for any such contribution. 
+#       from the creators of this software or from Endwall or from the Endware Development Team, for any such work contribution performed, and the user understands 
+#       that there will be no such remuneration or payment rendered to them for any such contribution. 
 #  END OF LICENSE AGREEMENT
 ##################################################################################################################################################################################
 #  ADITIONAL NOTES:
