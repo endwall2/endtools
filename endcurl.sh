@@ -150,8 +150,23 @@
 #####################################################        BEGINNING OF PROGRAM      #####################################################################################
 ##  get input list from shell argument 
 
+if [ "$#" == 1 ]
+then
 link=$1
-nargs="$#"
+elif [ "$#" == 2 ]
+then
+ if [ "$1" == "-r" ]
+ then
+ state="rand"
+ link=$2
+ fi
+else
+echo "USAGE: endget http://website.com/file.xyz"
+echo "USAGE: endget -r http://website.com/file.xyz"
+fi
+
+if [ "$state" == "rand" ]
+then
 
 # select random user agent
 
@@ -299,6 +314,13 @@ else
  ( 131 ) UA="Mozilla/5.0 (PLAYSTATION 3 4.80) AppleWebKit/531.22.8 (KHTML, like Gecko)" ;; 
  esac
 fi
+
+else 
+
+UA="Mozilla/5.0 (Windows NT 6.1; rv:45.0) Gecko/20100101 Firefox/45.0"
+
+fi 
+
 echo "$UA"
 
 HEAD="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\Accept-Language: en-US,en;q=0.5\Accept-Encoding: gzip, deflate\Connection: keep-alive"
@@ -313,7 +335,7 @@ echo "Downloading "$link""
 # initiate download and change user agent
 
 # initate curl download +tor + random agent
-torsocks curl -A "$UA" -H "$HEAD" $1 
+torsocks curl -A "$UA" -H "$HEAD" "$link" 
 
 exit 0
 #########################################################        END OF PROGRAM         ######################################################################################

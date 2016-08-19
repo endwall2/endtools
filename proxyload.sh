@@ -337,7 +337,7 @@ torsocks curl -m 30 -A "$UA" -H "$HEAD" "$ssl_site_rt"."$cc" | grep "Free" | gre
 ## while loop to pick up country code
 cc=" "
 while [ "$cc" == " " ];do
-cc=$(torsocks -m 30 curl -A "$UA" -H "$HEAD" "$ssl_site" | grep "The document"  | cut -d / -f 3 | cut -d . -f 3 )
+cc=$(torsocks curl -m 30 -A "$UA" -H "$HEAD" "$ssl_site" | grep "The document"  | cut -d / -f 3 | cut -d . -f 3 )
 sleep 1
 done
 echo "Country Code is "$cc" "
@@ -348,6 +348,7 @@ torsocks curl -m 30 -A "$UA" -H "$HEAD" "$ssl_site_rt"."$cc" | grep "Free" | gre
 
 cut -d '>' -f 1 "$holder_1" | cut -d ':' -f 2 | cut -d '.' -f 3 | sort -u > "$holder_2"
 
+echo "Downloading SSL Proxies"
 ## download the proxies then numeric sort and remove duplicates
 for link in $(cat "$holder_2") ; do
 torsocks curl -m 30 -A "$UA" -H "$HEAD" "$ssl_site_rt"."$link".html| grep "[0123456789]:[123456789][0123456789]" >> "$holder_3"

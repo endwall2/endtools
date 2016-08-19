@@ -50,7 +50,7 @@
 #  $  endnode -e 
 #  $  endnode -r 
 #  $  endnode -e -r
-$  $  endnode -r -e
+#  $  endnode -r -e
 #############################################################################################################################################################################
 #                                         ACKNOWLEDGEMENTS
 #############################################################################################################################################################################
@@ -160,14 +160,25 @@ $  $  endnode -r -e
 #####################################################        BEGINNING OF PROGRAM      #####################################################################################
 ##  get input list from shell argument 
 
-if [ "$1" == "-e" || "$2" == "-e" ]
+if [ "$1" == "-e" ]
+then
+lookup_tool="iplookup"
+elif [ "$2" == "-e" ]
 then
 lookup_tool="iplookup"
 else 
 lookup_tool="geoiplookup"
 fi
 
-if [ "$1" == "-r" || "$2" == "-r" ]
+if [ "$1" == "-r" ]
+then 
+state="rand"
+elif [ "$2" == "-r" ]
+then 
+state="rand"
+fi
+
+if [ "$state" == "rand" ]
 then
 
 # select random user agent
@@ -329,21 +340,21 @@ HEAD="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\Ac
 
 # generate a random number time delay
 
-# check tor project ip
-#torsocks curl -m 30 -A "$UA" -H "$HEAD" https://check.torproject.org/ > $check_tor 
-torsocks wget --user-agent="$UA_torbrowser" --header="$HEAD" https://check.torproject.org/
-torsocks wget --user-agent="$UA_torbrowser" --header="$HEAD" https://check.torproject.org/torcheck/img/tor-on.png
-torsocks wget --user-agent="$UA_torbrowser" --header="$HEAD" https://check.torproject.org/torcheck/img/tor-on.ico
+check_tor=check.tmp
+#check_tor=index.html
 
-#check_tor=check.tmp
-check_tor=index.html
+# check tor project ip
+torsocks curl -m 30 -A "$UA" -H "$HEAD" https://check.torproject.org/ > $check_tor 
+#torsocks wget -T 30 --user-agent="$UA" --header="$HEAD" https://check.torproject.org/
+torsocks wget -T 30 --user-agent="$UA" --header="$HEAD" https://check.torproject.org/torcheck/img/tor-on.png
+torsocks wget -T 30 --user-agent="$UA" --header="$HEAD" https://check.torproject.org/torcheck/img/tor-on.ico
 
 exit_address=$(grep -ah "Your IP" $check_tor | awk 'BEGIN {FS=">"} {print $3}' | awk 'BEGIN {FS="<"} {print $1}' )
 echo "TOR exit node is "$exit_address" "
 "$lookup_tool" "$exit_address" 
 
-#rm $check_tor
-rm index.html
+rm $check_tor
+#rm index.html
 rm tor-on.png
 rm tor-on.ico
 
