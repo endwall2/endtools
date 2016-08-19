@@ -303,6 +303,8 @@ else
  esac
 fi
 
+HEAD="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\Accept-Language: en-US,en;q=0.5\Accept-Encoding: gzip, deflate\Connection: keep-alive"
+
 echo "$UA"
 
 # generate a random number time delay
@@ -315,7 +317,7 @@ echo "Downloading "$link""
 # initiate download and change user agent
 
 # initate download +tor + random agent
-torsocks wget --user-agent="$UA" $1 
+torsocks wget --user-agent="$UA" --add-header "$HEAD" $1 
 
 exit 0
 #########################################################        END OF PROGRAM         ######################################################################################

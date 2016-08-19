@@ -6,11 +6,12 @@
 #
 # AUTHOR:  THE ENDWALL DEVELOPMENT TEAM
 # CREATION DATE:   APRIL 9 2016
-# VERSION: 0.12
-# REVISION DATE: JULY 21 2015
+# VERSION: 0.13
+# REVISION DATE: AUGUST 18 2016
 # COPYRIGHT: THE ENDWALL DEVELOPMENT TEAM, 2016 
 # 
-# CHANGE LOG:  - Updated user agents
+# CHANGE LOG:  - Added Tor browser extended header
+#              - Updated user agentes
 #              - Forked from endloads
 #              - Added extra user-agents
 #              - Forked from endtube
@@ -300,6 +301,8 @@ else
 fi
 echo "$UA"
 
+HEAD="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\Accept-Language: en-US,en;q=0.5\Accept-Encoding: gzip, deflate\Connection: keep-alive"
+
 # generate a random number time delay
 #delay=$( expr 10 + $(head -c 2 /dev/urandom | od -A n -i) % 120 | awk '{print $1}')
 #echo "Delaying download for "$delay" seconds"
@@ -310,7 +313,7 @@ echo "Downloading "$link""
 # initiate download and change user agent
 
 # initate curl download +tor + random agent
-torsocks curl -A "$UA" $1 
+torsocks curl -A "$UA" -H "$HEAD" $1 
 
 exit 0
 #########################################################        END OF PROGRAM         ######################################################################################
