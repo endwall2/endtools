@@ -8,7 +8,8 @@
 # CREATION DATE: JUNE 15 2016
 # VERSION: 0.08
 # REVISION DATE: AUGUST 18 2016
-# 
+# COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM
+#
 # CHANGE LOG:  - Default to tor browser UA with -r flag for randomized UA + tor browser header + timeout
 #              - Updated user agents
 #              - Fixed instructions

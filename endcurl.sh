@@ -4,11 +4,11 @@
 # TYPE: BOURNE SHELL SCRIPT
 # DESCRIPTION: Download http website using curl, torsocks,and a random user agent
 #
-# AUTHOR:  THE ENDWALL DEVELOPMENT TEAM
+# AUTHOR:  THE ENDWARE DEVELOPMENT TEAM
 # CREATION DATE:   APRIL 9 2016
 # VERSION: 0.13
 # REVISION DATE: AUGUST 18 2016
-# COPYRIGHT: THE ENDWALL DEVELOPMENT TEAM, 2016 
+# COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016 
 # 
 # CHANGE LOG:  - Default Tor browser UA + Tor browser extended header + -r flag for random user agent 
 #              - Updated user agentes

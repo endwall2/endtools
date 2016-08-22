@@ -4,12 +4,14 @@
 # TYPE: BOURNE SHELL SCRIPT
 # DESCRIPTION: Checks Fetched proxies for use in endtube.
 #
-# AUTHOR:  THE ENDWARE DEVELOPEMENT TEAM
+# AUTHOR:  THE ENDWARE DEVELOPMENT TEAM
 # CREATION DATE: JUNE 10 2016
-# VERSION: 0.11
-# REVISION DATE: AUGUST 15 2016
-# 
-# CHANGE LOG:  - Default to tor browser UA with -r flag for randomized UA + tor browser header
+# VERSION: 0.12
+# REVISION DATE: AUGUST 22 2016
+# COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM
+#
+# CHANGE LOG:  - Bug fix + increase timeout to 180
+#              - Default to tor browser UA with -r flag for randomized UA + tor browser header
 #              - Added -m 60 to curl to timeout
 #              - bug fix
 #              - Updated user agents
@@ -176,14 +178,15 @@ fi
 if [ "$infile" == ssl_proxies.txt ] ; then 
 holder_1=ssl_google.tmp
 holder_2=ssl_youtube.tmp
-outfile_1=ssl_proxies_gg_redir.txt
+outfile_1=ssl_proxies_gg_rd.txt
 outfile_2=ssl_proxies_gg.txt
 outfile_3=ssl_proxies_yt.txt
 elif [ "$infile" == socks_proxies.txt ] ; then 
 holder_1=socks_google.tmp
 holder_2=socks_youtube.tmp
-outfile_1=socks_proxies_google.txt
-outfile_2=socks_proxies_youtube.txt
+outfile_1=socks_proxies_gg_rd.txt
+outfile_2=socks_proxies_gg.txt
+outfile_3=socks_proxies_yt.txt
 else
 echo "USAGE:  $ proxycheck ssl_proxies.txt"
 echo "USAGE:  $ proxycheck socks_proxies.txt"
@@ -362,10 +365,10 @@ if [ "$infile" == ssl_proxies.txt ] ; then
 
 echo "$proxy" 
 echo "PROXY: "$proxy"" > "$holder_1"
-torsocks curl -m 60 -A "$UA" -H "$HEAD" --proxy "$proxy"  https://www.google.com >> "$holder_1"
+torsocks curl -m 180 -A "$UA" -H "$HEAD" --proxy "$proxy"  https://www.google.com >> "$holder_1"
 echo "PROXY: "$proxy"" >> "$holder_1" 
 echo "PROXY: "$proxy"" > "$holder_2" 
-torsocks curl -m 60 -A "$UA" -H "$HEAD" --proxy "$proxy"  https://www.youtube.com >> "$holder_2"
+torsocks curl -m 180 -A "$UA" -H "$HEAD" --proxy "$proxy"  https://www.youtube.com >> "$holder_2"
 echo "PROXY: "$proxy"" >> "$holder_2" 
 echo "$proxy" 
 echo " " 
@@ -375,17 +378,17 @@ echo " "
 ## capture working redirects
 awk '{ if ($0 ~ /The document/) i=NR; if (NR == i+3) {print $2} }' "$holder_1" >> "$outfile_1"
 ## capture working google hits
-awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /Search the world/ ) {print prxy} }' "$holder_1" >> "$outfile_1"
+awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /Search the world/ ) {print prxy} }' "$holder_1" >> "$outfile_2"
 ## capture working youtube hits
-awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /ytbuffer/ ) {print prxy} }' "$holder_2" >> "$outfile_2"
+awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /ytbuffer/ ) {print prxy} }' "$holder_2" >> "$outfile_3"
 
 elif [ "$infile" == socks_proxies.txt ] ; then 
 echo "$proxy" 
 echo "PROXY: "$proxy"" > "$holder_1"
-torsocks curl -m 60 -A "$UA" -H "$HEAD" --socks5 "$proxy"  https://www.google.com >> "$holder_1"
+torsocks curl -m 180 -A "$UA" -H "$HEAD" --socks5 "$proxy"  https://www.google.com >> "$holder_1"
 echo "PROXY: "$proxy"" >> "$holder_1" 
 echo "PROXY: "$proxy"" > "$holder_2" 
-torsocks curl -m 60 -A "$UA" -H "$HEAD" --socks5 "$proxy"  https://www.youtube.com >> "$holder_2"
+torsocks curl -m 180 -A "$UA" -H "$HEAD" --socks5 "$proxy"  https://www.youtube.com >> "$holder_2"
 echo "PROXY: "$proxy"" >> "$holder_2" 
 echo "$proxy" 
 echo " " 
@@ -403,6 +406,8 @@ else
 
 echo "USAGE:  $ proxycheck ssl_proxies.txt"
 echo "USAGE:  $ proxycheck socks_proxies.txt"
+echo "USAGE:  $ proxycheck -r ssl_proxies.txt"
+echo "USAGE:  $ proxycheck -r socks_proxies.txt"
 
 exit 1
 

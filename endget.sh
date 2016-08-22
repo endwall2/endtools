@@ -5,11 +5,11 @@
 # DESCRIPTION: Download file using wget torsocks,and 
 #              a random user agent
 #
-# AUTHOR:  THE ENDWALL DEVELOPMENT TEAM
+# AUTHOR:  THE ENDWARE DEVELOPMENT TEAM
 # CREATION DATE: APRIL 9 2016
 # VERSION: 0.12
 # REVISION DATE: AUGUST 18 2016
-# COPYRIGHT: THE ENDWALL DEVELOPMENT TEAM, 2016
+# COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016
 #
 # CHANGE LOG:  - Default to tor browser UA + -r flag for random UA + tor browser header
 #              - Updated user agents
