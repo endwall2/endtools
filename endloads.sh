@@ -1,42 +1,44 @@
 #!/bin/sh
 #################################################################################################################################################
-# NAME: proxycheck.sh
+# NAME: endloads.sh
 # TYPE: BOURNE SHELL SCRIPT
-# DESCRIPTION: Checks Fetched proxies for use in endtube.
+# DESCRIPTION: Downlods filess from an input file url list
+#              by randomizing lists and torsocks, wget and 
+#              a random user agent
 #
-# AUTHOR:  ENDWALL DEVELOPEMENT TEAM
-# CREATION DATE: JUNE 10 2016
-# VERSION: 0.13
+# AUTHOR:  THE ENDWARE DEVELOPMENT TEAM
+# CREATION DATE: APRIL 9 2016
+# VERSION: 0.18
 # REVISION DATE: AUGUST 22 2016
-# 
-# CHANGE LOG:  - moved user agents to user_agents.txt
-#              - Bug fix + increase timeout to 180
-#              - Default to tor browser UA with -r flag for randomized UA + tor browser header
-#              - Added -m 60 to curl to timeout
-#              - bug fix
-#              - Updated user agents
-#              - Output results incrementally
-#              - Updated to check proxy output using awk
-#              - Forked from proxyload
-#              - Added ssl proxies and socks proxies  
-#              - Forked from endcurl
+# COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016
+#
+# CHANGE LOG:   - Moved user agents to user_agents.txt
+#               - Default to tor browser UA -r flag for random UA, + tor browser header
+#               - Fixed a bug with the UA + Added min_delay, max_delay variables
+#               - Updated Acknowledgements
+#               - Updated EULA
+#               - Added extra user-agents
+#               - Forked from endtube
 #
 ########################################################################################################################################
-# DEPENDENCIES: torsocks,curl,od,head,urandom,sleep,awk
+# DEPENDENCIES: torsocks,wget,od,head,urandom,sleep
 ########################################################################################################################################
 # INSTRUCTIONS: Make a bin directory in ~/ add it to the path. Copy this file there and make executable.
-#               Start the TOR daemon. Execute the script.    
+#               Make a videos directory in Downloads.  Get some download links, and some proxies place in separte text files.
+#               Start the TOR daemon. Execute the script in the ~/Download/videos/ directory.    
 #   
 #  Do the following at a command prompt
 #
 #  $  mkdir ~/bin
-#  $  chmod u+wrx proxycheck.sh
-#  $  cp proxycheck.sh ~/bin/proxycheck
+#  $  chmod u+wrx endtube.sh
+#  $  cp endtube.sh ~/bin
 #  $  export PATH=$PATH:~/bin
-# 
-#  $ mkdir ~/proxies
-#  $ cd ~/proxies
+#  $  cd Downloads
+#  $  emacs/nano/leafpad etc  links.txt  
 #
+#     Populate list of url links into the file links.txt by right click and paste into the file in a column
+#     save links.txt and exit editor.
+# 
 #  START TOR DAEMON:
 #     SYSTEMD:
 #  $ sudo systemctl start tor
@@ -45,14 +47,10 @@
 #  $ sudo rc-update add tor default
 #  $ sudo rc-service start tor
 #  $ sudo rc-status
-#    STAND ALONE:
-#  $ tor_alpha  
-#     Run Proxyload 
-#  $ proxyload
-#     Run Proxycheck on output
-#
-#  $ proxycheck ssl_proxies.txt  
-#  $ proxycheck socks_proxies.txt
+#      
+#     Run EndLoads 
+#  $  endloads.sh links.txt
+#  
 #############################################################################################################################################################################
 #                                         ACKNOWLEDGEMENTS
 #############################################################################################################################################################################
@@ -161,120 +159,56 @@
 #####################################################        BEGINNING OF PROGRAM      #####################################################################################
 ##  get input list from shell argument 
 
-
-if [ "$#" == "2" ]
+if [ "$#" == 1 ]
 then
+Lunsort=$1
+elif [ "$#" == 2 ]
+then 
  if [ "$1" == "-r" ] 
- then
+ then 
  state="rand"
- infile="$2"
-else
- infile="$1"
+ Lunsort=$2
  fi
-else
-infile="$1"
-fi
-
-if [ "$infile" == ssl_proxies.txt ] ; then 
-holder_1=ssl_google.tmp
-holder_2=ssl_youtube.tmp
-outfile_1=ssl_proxies_gg_rd.txt
-outfile_2=ssl_proxies_gg.txt
-outfile_3=ssl_proxies_yt.txt
-elif [ "$infile" == socks_proxies.txt ] ; then 
-holder_1=socks_google.tmp
-holder_2=socks_youtube.tmp
-outfile_1=socks_proxies_gg_rd.txt
-outfile_2=socks_proxies_gg.txt
-outfile_3=socks_proxies_yt.txt
-else
-echo "USAGE:  $ proxycheck ssl_proxies.txt"
-echo "USAGE:  $ proxycheck socks_proxies.txt"
+else 
+echo "USAGE: endloads list.txt"
+echo "USAGE: endget -r list.txt"
 exit 1
 fi
 
-## MAIN LOOP
-for proxy in $(cat "$infile") ; do
+nargs="$#"
+min_delay=20
+max_delay=120
+
+# randomly sort these lists
+sort -R $Lunsort > temp1.srt
+list=temp1.srt
+
+#main loop to select random user agent
+for link in $(cat "$list" ); do  
 
 if [ "$state" == "rand" ]
 then
-# select random user agent
+# pick a random user agent
 UA=$( grep -v "#" /home/$USER/bin/user_agents.txt | shuf -n 1 )
-else 
+else
 UA="Mozilla/5.0 (Windows NT 6.1; rv:45.0) Gecko/20100101 Firefox/45.0"
 fi
-echo "$UA"
 
 HEAD="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\Accept-Language: en-US,en;q=0.5\Accept-Encoding: gzip, deflate\Connection: keep-alive"
 
-##generate a random number time delay
-delay=$( expr 5 + $(head -c 2 /dev/urandom | od -A n -i) % 10 | awk '{print $1}')
+echo "$UA"
+# generate a random number time delay
+delay=$( expr "$min_delay" + $(head -c 2 /dev/urandom | od -A n -i) % "$max_delay" | awk '{print $1}')
 echo "Delaying download for "$delay" seconds"
-## wait by delay time
+# wait by delay time
 sleep "$delay"
 
-if [ "$infile" == ssl_proxies.txt ] ; then 
+echo "Downloading "$link""
+# initate download +tor + random user-agent
+torsocks wget --user-agent="$UA" --header="$HEAD" "$link" 
 
-echo "$proxy" 
-echo "PROXY: "$proxy"" > "$holder_1"
-torsocks curl -m 180 -A "$UA" -H "$HEAD" --proxy "$proxy"  https://www.google.com >> "$holder_1"
-echo "PROXY: "$proxy"" >> "$holder_1" 
-echo "PROXY: "$proxy"" > "$holder_2" 
-torsocks curl -m 180 -A "$UA" -H "$HEAD" --proxy "$proxy"  https://www.youtube.com >> "$holder_2"
-echo "PROXY: "$proxy"" >> "$holder_2" 
-echo "$proxy" 
-echo " " 
-
-## NOW FILTER THE RESULTS FOR WORKING PROXIES
-
-## capture working redirects
-awk '{ if ($0 ~ /The document/) i=NR; if (NR == i+3) {print $2} }' "$holder_1" >> "$outfile_1"
-## capture working google hits
-awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /Search the world/ ) {print prxy} }' "$holder_1" >> "$outfile_2"
-## capture working youtube hits
-awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /ytbuffer/ ) {print prxy} }' "$holder_2" >> "$outfile_3"
-
-elif [ "$infile" == socks_proxies.txt ] ; then 
-echo "$proxy" 
-echo "PROXY: "$proxy"" > "$holder_1"
-torsocks curl -m 180 -A "$UA" -H "$HEAD" --socks5 "$proxy"  https://www.google.com >> "$holder_1"
-echo "PROXY: "$proxy"" >> "$holder_1" 
-echo "PROXY: "$proxy"" > "$holder_2" 
-torsocks curl -m 180 -A "$UA" -H "$HEAD" --socks5 "$proxy"  https://www.youtube.com >> "$holder_2"
-echo "PROXY: "$proxy"" >> "$holder_2" 
-echo "$proxy" 
-echo " " 
-
-## NOW FILTER THE RESULTS FOR WORKING PROXIES
-
-## capture working redirects
-awk '{ if ($0 ~ /The document/) i=NR; if (NR == i+3) {print $2} }' "$holder_1" >> "$outfile_1"
-## capture working google hits
-awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /Search the world/ ) {print prxy} }' "$holder_1" >> "$outfile_2"
-## capture working youtube hits
-awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /ytbuffer/ ) {print prxy} }' "$holder_2" >> "$outfile_3"
-
-else 
-
-echo "USAGE:  $ proxycheck ssl_proxies.txt"
-echo "USAGE:  $ proxycheck socks_proxies.txt"
-echo "USAGE:  $ proxycheck -r ssl_proxies.txt"
-echo "USAGE:  $ proxycheck -r socks_proxies.txt"
-
-exit 1
-
-fi
-
-done 
-############## END MAIN LOOP
-
-echo "Proxies Checked"
-
-rm "$holder_1"
-rm "$holder_2"
-
-date
-
+done
+# sometimes the download cuts off so don't delete the file until its all done
+rm "$list"
 exit 0
-#########################################################        END OF PROGRAM         ###################################################################################
-
+#########################################################        END OF PROGRAM         ######################################################################################

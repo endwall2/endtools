@@ -1,42 +1,56 @@
 #!/bin/sh
 #################################################################################################################################################
-# NAME: proxycheck.sh
+# NAME: endtube.sh
 # TYPE: BOURNE SHELL SCRIPT
-# DESCRIPTION: Checks Fetched proxies for use in endtube.
+# DESCRIPTION: Downlods youtube video files from an input video url list
+#              and an input proxy url list, by randomizing lists and  
+#              anonymously using youtube-dl, torsocks, and the proxy
 #
-# AUTHOR:  ENDWALL DEVELOPEMENT TEAM
-# CREATION DATE: JUNE 10 2016
-# VERSION: 0.13
-# REVISION DATE: AUGUST 22 2016
-# 
-# CHANGE LOG:  - moved user agents to user_agents.txt
-#              - Bug fix + increase timeout to 180
-#              - Default to tor browser UA with -r flag for randomized UA + tor browser header
-#              - Added -m 60 to curl to timeout
+# AUTHOR:  THE ENDWARE DEVELOPMENT TEAM
+# CREATION DATE: APRIL 9 2016
+# VERSION: 0.23
+# REVISION DATE: AUGUST 20 2016
+# COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016 
+#
+# CHANGE LOG:  - moved user agents to user_agent.txt
+#              - simplified proxy sort with shuf
+#              - added switches -e -er -re for exit node lookup default to no lookup 
+#              - use tor browser UA by default + -r flag for randomized UA + torbrowser header
+#              - use tor browser UA when checking tor exit node
+#              - geoiplookup on random proxy
 #              - bug fix
+#              - Added min_delay max_delay variables
 #              - Updated user agents
-#              - Output results incrementally
-#              - Updated to check proxy output using awk
-#              - Forked from proxyload
-#              - Added ssl proxies and socks proxies  
-#              - Forked from endcurl
+#              - Updated Acknowledgements
+#              - Updated EULA
+#              - Added exit node address grab
+#              - Added a bunch of user-agents
+#              - Fixed some typos
+#              - Updated EULA
+#              - Fixed randomization of proxies 
+#              - Fixed instructions
 #
 ########################################################################################################################################
-# DEPENDENCIES: torsocks,curl,od,head,urandom,sleep,awk
+# DEPENDENCIES: torsocks,youtube-dl,od,head,urandom,sleep,curl,geoiplookup,shuf
 ########################################################################################################################################
 # INSTRUCTIONS: Make a bin directory in ~/ add it to the path. Copy this file there and make executable.
-#               Start the TOR daemon. Execute the script.    
+#               Make a videos directory in Downloads.  Get some download links, and some proxies place in separte text files.
+#               Start the TOR daemon. Execute the script in the ~/Download/videos/ directory.    
 #   
 #  Do the following at a command prompt
 #
 #  $  mkdir ~/bin
-#  $  chmod u+wrx proxycheck.sh
-#  $  cp proxycheck.sh ~/bin/proxycheck
+#  $  chmod u+wrx endtube.sh
+#  $  cp endtube.sh ~/bin/endtube
 #  $  export PATH=$PATH:~/bin
-# 
-#  $ mkdir ~/proxies
-#  $ cd ~/proxies
+#  $  cd Downloads
+#  $  mkdir videos
+#  $  cd videos
+#  $  emacs/nano/leafpad etc  ytlinks.txt  
 #
+#     Populate list of youtube links into the file ytlinks.txt by right click and paste into the file in a column
+#     save ytlinks.txt and exit editor.
+# 
 #  START TOR DAEMON:
 #     SYSTEMD:
 #  $ sudo systemctl start tor
@@ -45,19 +59,37 @@
 #  $ sudo rc-update add tor default
 #  $ sudo rc-service start tor
 #  $ sudo rc-status
-#    STAND ALONE:
-#  $ tor_alpha  
-#     Run Proxyload 
-#  $ proxyload
-#     Run Proxycheck on output
+#      
+#     Run EndTube 
+#  $  endtube ytlinks.txt
+#  $  endtube -r ytlinks.txt
+#  $  endtube -e ytlinks.txt
+#  $  endtube -re ytlinks.txt
+#  $  endtube -er ytlinks.txt
+#  
+#  Using with Proxies:
+#  $ emacs/nano/leafpad etc proxies.txt    
+#     
+#     You will require at least 4 fresh https proxies for operation, get as many as possible
+#     Populate the list of proxies from a fresh proxy source, save the list and test the proxies using
+#     proxies must be in the file in format protocol://ipv4address:port 
+#     eg. https://5.3.55.125:8080, can also be just  5.4.55.125:8080
 #
-#  $ proxycheck ssl_proxies.txt  
-#  $ proxycheck socks_proxies.txt
+#  $  torsocks curl --proxy protocol://ipv4address:port www.google.com
+#
+#     Run EndTube
+#  $  endtube ytinks.txt proxies.txt
+#  $  endtube -r ytinks.txt proxies.txt
+#  $  endtube -e ytinks.txt proxies.txt
+#  $  endtube -er ytinks.txt proxies.txt
+#  $  endtube -re ytinks.txt proxies.txt
+#
 #############################################################################################################################################################################
 #                                         ACKNOWLEDGEMENTS
 #############################################################################################################################################################################
-#  The Endware Development Team would like to acknowledge the work and efforts of OdiliTime, and SnakeDude who graciously hosted and promoted this software project.  
-#  Without their efforts and their wonderful website www.endchan.xyz, The Endware Suite would not exist in the public domain at all in any form. 
+#  The Endware Development Team would like to acknowledge the work and efforts of OdiliTime, and SnakeDude who graciously hosted and promoted 
+#  this software project.  Without their efforts and their wonderful website www.endchan.xyz, The Endware Suite would not exist in the public domain 
+#  at all in any form. 
 #
 #  So thanks to OdiliTime, and to SnakeDude for inspiring this work and for hosting and promoting it. 
 #  
@@ -161,120 +193,189 @@
 #####################################################        BEGINNING OF PROGRAM      #####################################################################################
 ##  get input list from shell argument 
 
+enode="off"
+state="off"
 
-if [ "$#" == "2" ]
+if [ "$#" == 1 ]
 then
+Lunsort=$1
+elif [ "$#" == 2 ]
+then 
  if [ "$1" == "-r" ] 
+ then 
+ state="rand"
+ Lunsort=$2
+ elif [ "$1" == "-e" ]
+ then
+ enode="on"
+ Lunsort=$2
+ elif [ "$1" == "-er" ]
  then
  state="rand"
- infile="$2"
-else
- infile="$1"
+ enode="on"
+ Lunsort=$2
+ elif [ "$1" == "-re" ]
+ then
+ state="rand"
+ enode="on"
+ Lunsort=$2
+ else 
+ Lunsort=$1
+ Punsort=$2
  fi
-else
-infile="$1"
-fi
+elif [ "$#" == 3 ]
+then 
+ if [ "$1" == "-r" ] 
+ then 
+ state="rand"
+ Lunsort=$2
+ Punsort=$3
+ elif [ "$1" == "-e" ]
+ then
+ enode="on"
+ Lunsort=$2
+ Punsort=$3
+ elif [ "$1" == "-er" ]
+ then
+ enode="on"
+ state="rand"
+ Lunsort=$2
+ Punsort=$3
+ elif [ "$1" == "-re" ]
+ then
+ enode="on"
+ state="rand"
+ Lunsort=$2
+ Punsort=$3
+ fi
+else 
+echo "USAGE: endtube list.txt"
+echo "USAGE: endtube list.txt proxies.txt"
+echo "USAGE: endtube -r list.txt"
+echo "USAGE: endtube -e list.txt"
+echo "USAGE: endtube -re list.txt"
+echo "USAGE: endtube -er list.txt"
+echo "USAGE: endtube -r list.txt proxies.txt"
+echo "USAGE: endtube -e list.txt proxies.txt"
+echo "USAGE: endtube -re list.txt proxies.txt"
+echo "USAGE: endtube -er list.txt proxies.txt"
 
-if [ "$infile" == ssl_proxies.txt ] ; then 
-holder_1=ssl_google.tmp
-holder_2=ssl_youtube.tmp
-outfile_1=ssl_proxies_gg_rd.txt
-outfile_2=ssl_proxies_gg.txt
-outfile_3=ssl_proxies_yt.txt
-elif [ "$infile" == socks_proxies.txt ] ; then 
-holder_1=socks_google.tmp
-holder_2=socks_youtube.tmp
-outfile_1=socks_proxies_gg_rd.txt
-outfile_2=socks_proxies_gg.txt
-outfile_3=socks_proxies_yt.txt
-else
-echo "USAGE:  $ proxycheck ssl_proxies.txt"
-echo "USAGE:  $ proxycheck socks_proxies.txt"
 exit 1
 fi
 
-## MAIN LOOP
-for proxy in $(cat "$infile") ; do
+min_delay=20
+max_delay=200
+
+# randomly sort the video list
+sort -R $Lunsort > temp1.srt
+list=temp1.srt
+
+check_tor=check.tmp
+
+# define the current tor browser user agent
+UA_torbrowser="Mozilla/5.0 (Windows NT 6.1; rv:45.0) Gecko/20100101 Firefox/45.0"
+
+#main loop to select random user agent
+for link in $(cat "$list" ); do  
+
 
 if [ "$state" == "rand" ]
-then
-# select random user agent
-UA=$( grep -v "#" /home/$USER/bin/user_agents.txt | shuf -n 1 )
-else 
+then 
+# pick a random user agent
+UA=$( grep -v "#" /home/$USER/bin/user_agent.txt | shuf -n 1 )
+else
 UA="Mozilla/5.0 (Windows NT 6.1; rv:45.0) Gecko/20100101 Firefox/45.0"
 fi
-echo "$UA"
 
 HEAD="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\Accept-Language: en-US,en;q=0.5\Accept-Encoding: gzip, deflate\Connection: keep-alive"
 
-##generate a random number time delay
-delay=$( expr 5 + $(head -c 2 /dev/urandom | od -A n -i) % 10 | awk '{print $1}')
+echo "$UA"
+# generate a random number time delay
+delay=$( expr "$min_delay" + $(head -c 2 /dev/urandom | od -A n -i) % "$max_delay" | awk '{print $1}')
 echo "Delaying download for "$delay" seconds"
-## wait by delay time
+# wait by delay time
 sleep "$delay"
 
-if [ "$infile" == ssl_proxies.txt ] ; then 
+if [ "$enode" == "on" ] 
+then
+# check tor project ip
+torsocks curl -m 30 -A "$UA_torbrowser" -H "$HEAD" https://check.torproject.org/ > $check_tor
+torsocks wget -T 30 --user-agent="$UA_torbrowser" --header="$HEAD" https://check.torproject.org/torcheck/img/tor-on.png 
+torsocks wget -T 30 --user-agent="$UA_torbrowser" --header="$HEAD" https://check.torproject.org/torcheck/img/tor-on.ico 
 
-echo "$proxy" 
-echo "PROXY: "$proxy"" > "$holder_1"
-torsocks curl -m 180 -A "$UA" -H "$HEAD" --proxy "$proxy"  https://www.google.com >> "$holder_1"
-echo "PROXY: "$proxy"" >> "$holder_1" 
-echo "PROXY: "$proxy"" > "$holder_2" 
-torsocks curl -m 180 -A "$UA" -H "$HEAD" --proxy "$proxy"  https://www.youtube.com >> "$holder_2"
-echo "PROXY: "$proxy"" >> "$holder_2" 
-echo "$proxy" 
-echo " " 
+exit_address=$(grep -ah "Your IP" $check_tor | awk 'BEGIN {FS=">"} {print $3}' | awk 'BEGIN {FS="<"} {print $1}' )
+echo "TOR exit node is "$exit_address" "
+geoiplookup "$exit_address" 
+rm $check_tor
+rm tor-on.png
+rm tor-on.ico
+# generate a random number time delay
+delay=$( expr 5 + $(head -c 2 /dev/urandom | od -A n -i) % 30 | awk '{print $1}')
+echo "Delaying download for "$delay" seconds"
+# wait by delay time
+sleep "$delay"
+fi 
 
-## NOW FILTER THE RESULTS FOR WORKING PROXIES
+echo "Downloading "$link""
+# initiate download and change user agent
 
-## capture working redirects
-awk '{ if ($0 ~ /The document/) i=NR; if (NR == i+3) {print $2} }' "$holder_1" >> "$outfile_1"
-## capture working google hits
-awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /Search the world/ ) {print prxy} }' "$holder_1" >> "$outfile_2"
-## capture working youtube hits
-awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /ytbuffer/ ) {print prxy} }' "$holder_2" >> "$outfile_3"
+if [ "$#" == 1 ]
+then
+# initate download +tor + random agent - proxy 
+torsocks youtube-dl --user-agent "$UA" --add-header "$HEAD" "$link" 
 
-elif [ "$infile" == socks_proxies.txt ] ; then 
-echo "$proxy" 
-echo "PROXY: "$proxy"" > "$holder_1"
-torsocks curl -m 180 -A "$UA" -H "$HEAD" --socks5 "$proxy"  https://www.google.com >> "$holder_1"
-echo "PROXY: "$proxy"" >> "$holder_1" 
-echo "PROXY: "$proxy"" > "$holder_2" 
-torsocks curl -m 180 -A "$UA" -H "$HEAD" --socks5 "$proxy"  https://www.youtube.com >> "$holder_2"
-echo "PROXY: "$proxy"" >> "$holder_2" 
-echo "$proxy" 
-echo " " 
-
-## NOW FILTER THE RESULTS FOR WORKING PROXIES
-
-## capture working redirects
-awk '{ if ($0 ~ /The document/) i=NR; if (NR == i+3) {print $2} }' "$holder_1" >> "$outfile_1"
-## capture working google hits
-awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /Search the world/ ) {print prxy} }' "$holder_1" >> "$outfile_2"
-## capture working youtube hits
-awk '{ if ($0 ~ /PROXY: /) prxy=$2 ; if ($0 ~ /ytbuffer/ ) {print prxy} }' "$holder_2" >> "$outfile_3"
-
+elif [ "$#" == 2 ]
+then 
+ if [ "$1" == "-r" ] 
+ then 
+ torsocks youtube-dl --user-agent "$UA" --add-header "$HEAD" "$link" 
+ elif [ "$1" == "-e" ]
+ then
+ torsocks youtube-dl --user-agent "$UA" --add-header "$HEAD" "$link" 
+ elif  [ "$1" == "-er" ]
+ then
+ torsocks youtube-dl --user-agent "$UA" --add-header "$HEAD" "$link" 
+ elif  [ "$1" == "-re" ]
+ then
+ torsocks youtube-dl --user-agent "$UA" --add-header "$HEAD" "$link" 
+ else 
+   # randomly sort proxies and load the random proxy
+  Prxy=$( shuf -n 1 "$Punsort" )
+  echo "Random Proxy is" "$Prxy" 
+  proxy_ip=$( echo "$Prxy" | cut -d : -f 1 )
+  geoiplookup "$proxy_ip"
+  # initiate download + tor + random UA + proxy
+  torsocks youtube-dl --user-agent "$UA" --add-header "$HEAD" --proxy "$Prxy" "$link" 
+  rm $proxies
+ fi
+elif [ "$#" == 3 ]
+then
+  # randomly sort proxies and load 
+  Prxy=$( shuf -n 1 "$Punsort" )
+  echo "Random Proxy is" "$Prxy" 
+  proxy_ip=$( echo "$Prxy" | cut -d : -f 1 )
+  geoiplookup "$proxy_ip"
+  # initiate download + tor + random UA + proxy
+  torsocks youtube-dl --user-agent "$UA" --add-header "$HEAD" --proxy "$Prxy" "$link" 
+  rm $proxies
 else 
-
-echo "USAGE:  $ proxycheck ssl_proxies.txt"
-echo "USAGE:  $ proxycheck socks_proxies.txt"
-echo "USAGE:  $ proxycheck -r ssl_proxies.txt"
-echo "USAGE:  $ proxycheck -r socks_proxies.txt"
-
+echo "USAGE: endtube list.txt"
+echo "USAGE: endtube list.txt proxies.txt"
+echo "USAGE: endtube -r list.txt"
+echo "USAGE: endtube -e list.txt"
+echo "USAGE: endtube -er list.txt"
+echo "USAGE: endtube -re list.txt"
+echo "USAGE: endtube -r list.txt proxies.txt"
+echo "USAGE: endtube -e list.txt proxies.txt"
+echo "USAGE: endtube -re list.txt proxies.txt"
+echo "USAGE: endtube -er list.txt proxies.txt"
 exit 1
-
 fi
 
-done 
-############## END MAIN LOOP
+done
+# sometimes the download cuts off so don't delete the file until its all done
 
-echo "Proxies Checked"
-
-rm "$holder_1"
-rm "$holder_2"
-
-date
+mv "$list" "$Lunsort"
 
 exit 0
-#########################################################        END OF PROGRAM         ###################################################################################
-
+#########################################################        END OF PROGRAM         ######################################################################################
