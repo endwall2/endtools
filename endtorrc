@@ -2,13 +2,14 @@
 # TITLE: ENDTORRC
 # AUTHOR: THE ENDWARE DEVELOPEMENT TEAM
 # CREATION DATE: MAY 31, 2016
-# VERSION: 0.12
-# REVISION DATE: AUGUST 25, 2016
+# VERSION: 0.13
+# REVISION DATE: OCTOBER 29, 2016
 # COPYRIGHT: THE ENDWARE DEVELOPEMENT TEAM, 2016
 #
 # DESCRIPTION: A sample tor configuration file to use with endware
 #
-# CHANGE LOG: - Removed deprecated listen address variable
+# CHANGE LOG: - SocksPort and Isolation flags
+#             - Removed deprecated listen address variable
 #             - Flagged and grouped deprecated variablesflags to comply with tor-2.9.2 warnings
 #             - Added {SM} to exit+entry nodes
 #             - Added {BH} to exclude + added ClientTransportPlugin lines to Bridges 
@@ -192,12 +193,14 @@ StrictNodes 1
 ##Only works if starting tor as root
 ################################  DNS/TRANSPROXY/SOCKS LISTENERS  ##################################
 
-## Transparent Proxying 
-## Set Sandbox 0 or comment out Sandbox 1 to use
-#Transport 9040
+SocksPort 9050 IsolateDestPort IsolateDestAddr IsolateSOCKSAuth
 
 ## DNS Listening Port to resolve DNS via the tor network ( use with dnsmasq)
 DNSPort 9053
+
+## Transparent Proxying 
+## Set Sandbox 0 or comment out Sandbox 1 to use
+#Transport 9040
 
 ###################################################################################################
 #                                     VARIABLE CONFIGURATION
