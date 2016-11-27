@@ -7,11 +7,12 @@
 #
 # AUTHOR:  THE ENDWARE DEVELOPMENT TEAM
 # CREATION DATE: NOVEMBER 27, 2016
-# VERSION: 0.01
+# VERSION: 0.02
 # REVISION DATE: NOVEMBER 27, 2016
 # COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2016 
 #
-# CHANGE LOG:  -- file creation + gunzip unpack optimization
+# CHANGE LOG: -- delete temp files 
+#             -- file creation + gunzip unpack optimization
 #
 ########################################################################################################################################
 # DEPENDENCIES: torsocks,youtube-dl, endget, wget, tor, gunzip, grep , cut
@@ -262,6 +263,11 @@ do
 echo "https://www.youtube.com/watch?v="$vname" ">> playlist.txt
 
 done
- 
+
+## Remove temporary files
+rm playlist.html
+rm video_names.tmp
+
+exit "$?" 
 
 ################################# END OF PROGRAM #########################################################
