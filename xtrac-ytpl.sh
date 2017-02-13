@@ -1,6 +1,6 @@
 #!/bin/sh
 #################################################################################################################################################
-# NAME: endxplist.sh
+# NAME: xtrac-ytpl.sh
 # TYPE: BOURNE SHELL SCRIPT
 # DESCRIPTION: Downloads youtube video playlist and orgainizes into a text list to 
 #              feed to endtube.     
@@ -24,8 +24,8 @@
 #  Do the following at a command prompt
 #
 #  $  mkdir ~/bin
-#  $  chmod u+wrx endxplist.sh
-#  $  cp endtube.sh ~/bin/endxplist
+#  $  chmod u+wrx xtrac-ytpl.sh
+#  $  cp xtrac-ytpl.sh ~/bin/xtrac-ytpl
 #  $  export PATH=$PATH:~/bin
 #  $  cd Downloads
 #  $  mkdir videos
@@ -41,7 +41,7 @@
 #  $ sudo rc-status
 #      
 #     Run EndXplist 
-#  $  endxplist https://www.youtu.be/playlist.html
+#  $  xtrac-ytpl https://www.youtu.be/playlist.html
 #############################################################################################################################################################################
 #                                         ACKNOWLEDGMENTS
 #############################################################################################################################################################################
@@ -197,12 +197,12 @@ do
 
  if [ "$arg" == "--help" ]
  then
- echo "ENDTUBE: Download videos using tor and youtube-dl, random user-agents and proxies"
+ echo "XTRAC-YTPL: Extract youtube playlists from youtube.com playlist links using wget, and tor and endget
  echo " "
- echo "USAGE:  endtube --option --option --list list.txt" 
- echo "endxplist --help    # print usage information"
- echo "endxplist --version # print version information"
- echo "endxplist https://youtu.be/playlist=gGHeoahhe   # Download the url (assume last input is a url)"
+ echo "USAGE:  xtrac-ytpl --option --option --list list.txt" 
+ echo "xtrac-ytpl --help    # print usage information"
+ echo "xtrac-ytpl --version # print version information"
+ echo "xtrac-ytpl https://youtu.be/playlist=gGHeoahhe   # Download the url (assume last input is a url)"
  echo " "
  shift 
  exit 0
@@ -247,7 +247,10 @@ done
 
 ## assume last input is the playlsit url 
 ## download the playlist as a zip file
+## replace this section with the appropriate sections from endget to make it standalone 
+
 endget $arghold -O playlist.html.gz
+
 ## unzip/decompress the html
 gunzip playlist.html.gz
 
