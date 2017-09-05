@@ -1,0 +1,552 @@
+########### ENDSTREAM VERSION 0.37 #################
+########### ENGLISH ##############
+# 1) France 24 Anglais 
+# 2) BBC World News
+# 3) Sky News
+# 4) BBC News London
+# 5) RT UK
+# 6) EuroNews English
+# 7) DW English
+# 8) Russia Today
+# 9) CBSN 
+# 10) MSNBC
+# 11) Bloomberg Business USA
+# 12) NEWSMAX USA
+# 13) ABC News USA
+# 14) CNN America  
+# 15) RT America
+# 16) Newsy
+# 17) Al Jazeera
+# 18) TRT World
+# 19) i24 News Israel
+# 20) Saudi 2 TV
+# 21) Press TV
+# 22) India TODAY
+# 23) CGTN China English
+# 24) Arirang TV Korea
+# 25) NHK World Japan 
+# 26) NewsAsia Singapore
+# 27) CNN PHILIPPINES
+# 28) ABC News Australia 
+# 29) Africa News Live
+# 30) ANN7 South Africa
+# 31) Arise News Nigeria/London
+# 32) Channels 24 Nigeria
+# 33) TVC News Nigeria
+# 34) VOA
+# 35) C-SPAN 1 HD
+# 36) DVIDs TV
+# 37) Juptier Broadcasting 
+# 38) TWiT
+# 39) Infowars
+# 40) The Young Turks
+###############################
+# 41) France 24 
+# 42) France Info TV
+# 43) Euronews Francais
+# 44) France Info Radio
+# 45) France Inter
+# 46) RTL En direct
+# 47) Direct Journal TVLandes    
+# 48) BMF TV
+# 49) i24 News en Direct
+# 50) Europe 1
+# 51) Africa News Francais
+# 52) RFI
+# 53) Mosaik TV Francais
+# 54) Africa24
+# 55) TLM Lyon Metro
+# 56) CGTN Francais
+# 57) ICI RDI Canada
+# 58) TV5 monde 
+# 59) TV5+ monde 
+# 60) BFM SPORT Francais
+# 61) QVC Francais
+# 62) Max FM 92.9 
+# 63) Gong Asian Cinema Francais
+# 64) M7 Television
+# 65) CGTN Francais
+# 66) ICI Radio Canada Quebec City Quebec CBVT-DT
+# 67) ICI Radio-Canada – Ottawa-Gatineau – CBOFT-DT
+# 68) ICI Radio-Canada – Montréal CBFT-DT
+# 69) ICI Radio-Canada – Trois-Rivières – CKTM-DT
+# 70) ICI Radio-Canada – Rimouski – CJBR-DT
+# 71) ICI Radio-Canada – Saguenay (lâ lâ) – CKTV-DT
+# 72) ICI Radio-Canada – Sherbrooke – CKSH-DT
+# 73) Assemblee Nationale du Quebec Francais
+# 74) Canal Savoir Francais
+# 75) CPAC 1 Francais
+# 76) EuroSports Francais
+# 77) France 0
+# 78) FRANCE 2
+# 79) France 3 Rhone Alpes
+# 80) RTS UN
+############## ESPANOL ##########################
+# 81) Magala TV Spain  Malaga,Andalusia,Spain
+# 82) RT Espanol
+# 83) DW Espanol
+# 84) NTN24 Venezuela
+# 85) Canal 8 San Juan Argentina
+# 86) Canal 6 San Rafael Argentina
+# 87) Canal 7 Mendoza Argentina
+# 88) c5n Argentina
+# 89) A24 Argentina
+# 90) TelePacifico Colombia
+# 91) Canal 8 Mar del Plata
+# 92) Hispan TV
+# 93) Globovision Venezeula
+# 94) Canal 2 Cablenet San Vicente Argentina
+# 95) Excelsior TV Mexico
+# 96) Todo Noticias Argentina
+# 97) La Nacion TV Argentina
+# 98) PSN Tijuana Mexico
+# 99) Televisia del Golfo Mexico
+# 100) Televisia Veracruz Mexico
+# 101) Televisia Matamoros Mexico
+# 102) Televisia Zacatecas Mexico
+# 103) Televisia Puebla Mexico
+# 104) Televisia Acapuloco Mexico
+# 105) Televisia Cuernavaca Mexico
+# 106) Televisia Leon Mexico
+# 107) Televisia Queretaro Mexico
+# 108) Televisa Gudalajera Mexico
+# 109) Televisia Mexicali Mexico
+# 110) Televisia Toluca Mexico
+# 111) Televisia Hermosillo Mexico
+# 112) Televisia Torreon Mexico
+# 113) TeleSUR Venezuela
+# 114) Imagen Radio Mexico
+# 115) CNN Chile
+# 116) TVES
+# 117) Canal del Congreso Mexico Spanish
+# 118) El Capitolio Venezulana
+# 119) Euronews Espanol
+# 120) CGTN Espanol
+############# ASIAN ########################
+# 121) CCTV 4 Chinese
+# 122) 119 Tai Li Taiwan
+# 123) EBC 51 News Taiwan
+# 124) EBC Finance Taiwan
+# 125) TzuChi DaAi World Taiwan 
+# 126) FTV Taiwan
+# 127) TTV News Taiwan
+# 128) CTV Taiwan
+# 129) CTS World News HD Taiwan
+# 130) SET News Taiwan
+# 131) CTI Taiwan
+# 132) NeXT TV Taiwan
+# 133) Sinda Television
+# 134) Cheng Sin TV
+# 135) TLTV
+# 136) FLTV Taiwan
+# 137) Guo Shiming
+# 138) Dolphin TV
+# 139) SITTI 1
+# 140) SITTI 2
+# 141) SITTI 3
+# 142) Tzu Chi DaAiVideo 
+# 143) Tzu Chi Dai HD Live 
+# 144) OnTV Hong Kong
+# 145) TBS Live Korea  
+# 146) YTN DMB Korea  
+# 147) YTN Life Korea  
+# 148) YTN Science Korea  
+# 149) Channel 23 Korea  
+# 150) KBS World 24 Korea
+# 151) YTN 27 Korea
+# 152) CTS Korea
+# 153) BSC 24 1
+# 154) BSC 24 2
+# 155) Earthquake 24  
+# 156) KBS Live 24 Japan  
+# 157) QVC JAPAN SHOPPING CHANNEL
+# 158) Sol!ve 24 Japan
+# 159) KBS World Korea
+# 159) Kiss Radio 1 Taiwan 
+# 160) Kiss Radio 2 Taiwan 
+######### INDIAN ###################
+# 161) News 9 Bangalore Karnataka
+# 162) CVR News India
+# 163) CVR English India
+# 164) Shaski India
+# 165) SunNews 
+# 166) TV9 India Live
+# 167) Rajya Sabha TV
+# 168) TV9 Gujarat
+# 169) Tv9 Marathi
+# 170) News 7 Tamil
+# 171) T News Telegu
+# 172) News 18 India
+# 173) Aaj Tak 
+# 174) NTV Telugu
+# 175) ABN Telugu
+# 176) Vanitha TV 
+# 177) HMT Telugu
+# 178) TV5 News 
+# 179) Channel 24 India
+# 180) SAMAA TV
+# 181) Survana News
+# 182) ATN News Bangladesh
+# 183) i News Telugu
+# 184) News 1 Kannada 
+# 185) Jansari News Kannada 
+# 186) Media One News
+# 187) Tamil Live News
+# 188) DD News
+# 189) Public TV India
+# 190) REPORTER LIVE
+# 191) Puthiyah Thalimurai
+# 192) AsiaNet News
+# 193) V6 News
+# 194) Kalaignar TV1
+# 195) ETV Andhra Pradesh
+# 196) News 18 Tamilnadu
+# 197) The Polimer TV
+# 198) Jaya Plus
+# 199) TEZ TV
+# 200) Dilli Aaj Tak
+# 201) The Ekantipur Nepal
+# 202) NepalMandal TV
+# 203) PTV Pakistan
+# 204) Neo TV Pakistan
+# 205) Dawn News PAKISTAN
+# 206) Bol TV Pakistan
+# 207) 92 News Pakistan
+# 208) 24 News Pakistan HD
+# 209) TOLO NEWS AFGHANISTAN
+########### ARABIC ###############
+# 210) RT Arabic 
+# 211) ON E Live 
+# 212) ON E Sports
+# 213) ON Live
+# 214) Al Jazeera Arabic Qatar
+# 215) France 24 Arabic
+# 216) BBC Arabic
+# 217) Al Arabiya
+# 218) Al Mayadeen
+# 219) Syrian Satellite
+# 220) ORTAS Syrian Satellite
+# 221) Bedya TV Arabic
+# 222) Belqees TV Arabic
+# 223) Saudi TV Blue
+# 224) Saudi Finance TV Purple
+# 225) Saudi Channel 1 Green 
+# 226) Saudi TV Gold  Mecca Kabba
+# 227) Saudi Sliver Educational
+# 228) Saudi Cultural TV Orange
+# 229) Saudi Sports TV Red
+# 230) DMC Live
+# 231) SKY Arabic
+# 232) CBC Egypt Arabic Drama 
+# 233) eXtra News Egypt Arabic
+# 234) CBC Egypt Sofra Arabic
+# 235) Saudi Ajyal Kids Tv
+# 236) Makkha Live (Mecca Kaaba) 
+# 237) DW Arabic
+# 238) Mekameleen (Egypt)
+# 239) CGTN Arabic
+########## TURKISH ################
+# 240) TRT Haber Turkey
+# 241) NTV Turkey
+# 242) HaberTurk TV
+# 243) Star TV  Turkish
+# 244) Fashion 1 Turk TV
+# 245) CNN Turk 
+# 246) Ulusal Kanal Turkish
+# 247) KRT Kulture TV
+# 248) Tele 1 Kanali
+# 249) Turkmenelie FM
+# 250) Turkmenelie TV
+# 251) La Legul TV
+# 252) Number1 TV Canlı Yayın
+# 253) Number1 Turk TV
+# 254) TGRT Haber TV
+# 255) TVNET Canali Yayin
+# 256) NEWSCHANNEL CANLI ( ZINDI )
+# 257) Galatasaray 
+# 258) A9 Televizyounu 
+# 259) STerkTV Zindi 
+# 260) Ronahi TV Zindi 
+# 261) Number1 Turk FM
+########### GREEK  #################
+# 262) Action 24 Greece 
+# 263) Ionian TV
+# 264) Star Lamia
+# 265) Blue Sky TV Athens Greece
+######## DEUTSCH  ####################
+# 266) EuroNews Deutsch
+# 267) Tagessschau 24 Germany
+# 268) W24 Wein Germany
+# 269) WDR Germany
+# 270) RTS Salzburg Austria
+# 271) Tirol TV German
+######## DUTCH #####################
+# 272) 538 TV NETHERLANDS
+# 273) AT5 NETHERLANDS
+######## ALBANIA ################
+# 274) ORA News Albania
+# 275) ABC NEWS 24 Albania
+########### ROMANIAN ##############
+# 276) Mediatv Romania
+# 277) TV Publica Moldova
+######### RUSSIA #################
+# 278) Euronews Russian
+# 279) Vesti FM Russia
+# 280) Россия 24
+# 281) CGTN Russian
+# 282) Life News Russia
+# 283) ТВ-ТРЕЙЛЕР Russia
+######## UKRAINE ################
+# 284) Ukraine Channel 5 
+# 285) Ukraine 112
+# 286) News 1 Ukraine
+# 287) Еспресо Ukraine
+# 288) Thromadske Ukraine
+# 289) UA TV Ukraine
+######### FILIPINO ################
+# 290) DZMM ABS-CBN Philippeans Radio
+# 291) DZRH Philippeans
+# 292) DWIZ Philippeans
+# 293) PTV Philippines
+######### PORTUGESE BRASIL ###########
+# 294) STF Brazil
+# 295) TV Estúdio Brasil
+# 296) TV Cultura Brasil HD 
+# 297) Rádio Justiça - Ao Vivo
+# 298) Rádio Justiça - Ao Vivo
+####### ITALIAN ################
+# 299) Canale 7 Italy
+# 300) SkyTG 24 Italian
+# 301) Telecolor Lombardia Italy
+# 302) Cremona 1 Italy
+# 303) QVC Itallian
+######### PERSIAN #################
+# 304) Euronews Persian
+# 305) BBC Persian
+######### AFRICA ################
+# 306) ADOM TV 
+# 307) Biafra TV Africa 
+# 308) Joy News Ghana
+# 309) KTN Kenya
+# 310) NTV Uganda
+#########  UNSORTED ##############
+# 311) Number1 Radyo Canlı Yayın
+# 312) Venevision Venezuela
+###### TRANSIENT FEEDS ###############
+# 313) RSBN News Feed 2
+# 314) RUPTLY
+###### PODCAST #######################
+# 315) PBS NewsHour Video
+# 316) CBC The National
+# 317) SABC Digital News South Africa
+# 318) AP Top Stories
+# 319) Democracy Now Headlines 
+# 320)
+######### LOCATIONS #################
+# 321) NASA ISS Earth Viewing
+# 322) NASA ISS 1
+# 323) NASA ISS 2
+# 324) Venice Italy Bridge Cam Live
+# 325) Venice Italy Port Cam Live
+# 326) Jackson Hole Intersection
+# 327) Jackson Hole Town Square
+# 328) Jackson Hole Rustic Inn
+# 329) Aosta Sarre Italy
+# 330) Soggy Dollar Bar
+# 331) Netherlands Amsterdam
+# 332) Shibua Japan Community Crosswalk 
+# 333) Akiba Japan Live
+# 334) Yahoo Weather Japan
+# 335) Yahoo Weather Steamy Mountains
+# 336) Naman Seoul Tower South Korea  
+# 337) Shizuoka Bridge Japan
+# 338) Yokohama Port Japan
+# 339) Hokkido Weather Cams
+# 340) Mount Fuji Japan
+# 341) Netherlands Hart Beach
+# 342) Florida Cam 1
+# 343) Florida Cam 2
+# 344) Florida Cam 3
+# 345) Florida Cam 4
+# 346) 
+# 347) Durango Colorado USA
+# 348) Star Dot Cam 1
+# 349) Youing Japan Route 10
+# 350) Star Dot Cam 4
+# 351) Star Dot Cam 5
+# 352) Star Dot Cam 6
+# 353) Fine Cine London 1
+# 354) Fine Cine London 2
+# 355) Fine Cine London 3
+# 356) Berlin Airport 
+# 357) Osaka Japan  
+# 358) Port of Los Angeles  
+# 359) ITS COM STUDIO Japan  
+# 360) China Shoreline 
+######## USA LOCAL NEWS #########
+# 361) RSBN Auburn Alabama USA
+# 362) News 12 Brooklyn @
+# 363) News 12 Long Island @
+# 364) FOX 25 Boston Massachusetts @
+# 365) WGN 9 Chicago   @
+# 366) FOX 23 Tulsa Oklahoma @
+# 367) FOX 13 News Memphis @
+# 368) FOX 30 Jacksonville Florida  @
+# 369) CBS 47 Jacksonville Florida  @
+# 370) ABC News 9 Orlando 
+# 371) Fox News 10 Phoenix Arizona USA
+# 372) FOX 2 News KTVU  Bay Area
+# 373) WTPC 16 Virginia
+# 374) ATXN Austin Texas
+# 375) Seminole TV Florida
+# 376) The Florida Channel
+# 377) The Weather Network
+# 378) Weather Nation
+# 379) CBS 13 News Stockton California USA
+# 380) CBS 2 News New York
+# 381) NBC 4 News (New York)
+# 382) CBS 4 News Boston
+# 383) WVIT 30 News Hartford
+# 384) NBC 10 News (Philadelphia)
+# 385) CBS 3 News Michigan 
+# 386) NBC News Nebraska
+# 387) CBS News Nebraska
+# 388) WJFW Newswatch 12 (Wisconsin)
+# 389) CBS 2 Salt Lake City
+# 390) CBS 5 News Colorado/ FOX 4 Kansas 
+# 391) NBC 11 Bay Area
+# 392) KCAL 9 News Los Angeles
+# 393) KNBC 4 News (Los Angeles)
+# 394) ABC 3 News Louisiana
+# 395) WPLG 10 News Miami
+# 396) WJXT News 4 Jacksonville
+# 397) CBS WBZ, Boston, Massachusettss
+# 398) CTV NEWS Canada
+# 399) Fox News Talk
+# 400) ----------------
+####### ULTRA #############
+# 401) ABC News Digital 1
+# 402) ABC News Digital 2
+# 403) ABC News Digital 3
+# 404) ABC News Digital 5
+# 405) NBC News Live Event
+# 406) WSJ Live
+# 407) C-SPAN-1 Live Event
+# 408) C-SPAN-2 Live Event
+# 409) C-SPAN-3 Live Event
+# 410) CNN Livestream 1
+# 411) CNN Livestream 2  
+# 412) CPAC 1 Canada
+# 413) CPAC 2 Canada
+# 414) What America Thinks
+# 415) NASA TV Public Education
+# 416) NASA TV Media
+# 417) RT Documentary
+# 418) CGTN Documentary
+# 419) HSN
+# 420) HSN 2
+# 421) QVC 
+# 422) QVC Beauty UK
+# 423) QVC Style UK
+# 424) The Shopping Channel TSC
+# 425) IdealWorld
+# 426) C-SPAN 2 HD
+# 427) C-SPAN 3 HD
+# 428) Euronews Maygar Hugarian
+# 429) Bloomberg Europe
+# 430) London Live 
+# 431) A Plus Australia
+# 432) Yes TV
+# 433) The Blaze
+# 434) The Weather Channel
+# 435) TRT BELGESEL HD
+# 436) BYUTV
+# 437) BYUTV International
+# 438) Arirang Radio English 
+# 439) Go News
+# 440) Show TV Turkey
+##### SPORTS / ENTERTAINMENT ####################
+# 441) PAC-12 Net. Arizona
+# 442) PAC-12 Net. Bay Area
+# 443) PAC-12 Net. Los Angeles
+# 444) PAC-12 Net. Mountain
+# 445) PAC-12 Net. Oregon
+# 446) PAC-12 Net. Washington
+# 447) USA-BASKET UNI Arizona
+# 448) USA-BASKET UNI Los Angeles
+# 449) USA-BASKET UNI Mountain
+# 490) USA-BASKET UNI Oregon
+# 451) USA-BASKET UNI Washington
+# 452) EuroSports
+# 453) Virgin Music 2
+# 454) Olympic Channel HD
+# 455) NFL Now
+# 456) MLB Network
+# 457) 106.7 The Fan
+# 458) 105.7 The Fan
+# 459) High Stakes Poker
+# 460) Toonami 
+# 461) Talking Tom and Friends
+# 462) Talking Tom and Friends Minis
+# 463) Adult Swim Animated Marathon 
+# 464) Adult Swim 
+# 465) Adult Swim Live Action Marathon 
+# 466) Animal Planet HD
+# 467) Insight TV
+# 468) ----------------
+# 469) ANIBOX 
+# 470) Music Choice Play HD
+# 471) MTV AM Russia
+# 472) Capital TV
+# 473) Heart TV
+# 474) CITY 
+# 475) Kiss TV
+# 476) Country Music Channel
+# 477) Heavy Metal Television
+# 478) О2 ТВ Russia
+# 479) Smile of a Child
+# 480) Family Friendly Entertainment
+############### RELIGIOUS ###################
+# 481) CTV Vaticano
+# 482) EWTN English
+# 483) EWTN Ireland 
+# 484) Amazing Facts TV (Christian)
+# 485) It's Supernatural! Network (Christian)
+# 486) Sheppard's Chapel (Christian)
+# 487) International House of Prayer (IHOP) (Christian)
+# 488) Belivers Voice of Victory Network
+# 489) Three Angels BroadCasting
+# 490) TCT HD
+# 491) TCT SD
+# 492) TCT Kids
+# 493) Salt and Light TV Portage Michigan
+# 494) LLBN TV
+# 495) Rap Resurrection
+# 496) Hillsong Channel
+# 497) Al Hayat TV Arabic
+# 498) Al Fady TV Arabic
+# 499) Aghapy TV
+# 500) St. Marys Coptic
+# 501) Word of God Greek
+# 502) CBN
+# 503) CBN News
+# 504) NRB Network
+# 505) Shalom TV
+# 506) Heaven TV
+# 507) Rakshana TV
+# 508) Powervision TV
+# 509) KJV Audio
+# 510) Catholic TV (USA) 
+# 511) Quran English Arabic
+# 512) EWTN German
+# 513) Jewish Life TV (USA)
+# 514) The Church Channel
+# 515) Temple Institute
+# 516) TBN
+# 517) GOD TV (USA) 
+# 518) EWTN Spanish 
+# 519) EWTN Africa
+# 520) EWTN Asia
+#############  MEGA   #####################
+# 521) Harbor Light Radio
+# 522) JUCE TV

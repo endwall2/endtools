@@ -119,11 +119,11 @@
 #############################################################################################################################################################################
 #                                         ACKNOWLEDGMENTS
 #############################################################################################################################################################################
-#  The Endware Development Team would like to acknowledge the work and efforts of OdiliTime, and SnakeDude who graciously hosted and promoted this software project. 
+#  The Endware Development Team would like to acknowledge the work and efforts of OdiliTime, Balrog and SnakeDude who graciously hosted and promoted this software project. 
 #  We would also like to acknowledge the work and efforts of Stephen Lynx, the creator and maintainer of LynxChan.  
 #  Without their efforts and their wonderful web site www.endchan.xyz, The Endware Suite would not exist in the public domain at all in any form. 
 #
-#  So thanks to OdiliTime, SnakeDude, and Stephen Lynx for inspiring this work and for hosting and promoting it. 
+#  So thanks to OdiliTime, Balrog, SnakeDude, and Stephen Lynx for inspiring this work and for hosting and promoting it. 
 #  
 #  The Endware Suite including Endwall,Endsets,Endlists,Endtools,Endloads and Endtube are named in honor of Endchan.
 #
@@ -145,6 +145,7 @@
 #
 #  The Endware Development Team
 ##############################################################################################################################################################################
+
 ##############################################################################################################################################################################
 #                                                              LICENSE AGREEMENT  
 ##############################################################################################################################################################################
@@ -236,7 +237,7 @@ REFERERS="$HOME/bin/referers.txt"
 
 # min delay max delay time between downloads
 min_delay=30
-max_delay=450
+max_delay=630
 
 ## initial flag switch states
 enode="off"
@@ -421,7 +422,7 @@ json_dump=json.tmp
 json_unpack=json.col
 
 # define the current tor browser user agent
-UA_torbrowser="Mozilla/5.0 (Windows NT 6.1; rv:45.0) Gecko/20100101 Firefox/45.0"
+UA_torbrowser="Mozilla/5.0 (Windows NT 6.1; rv:52.0) Gecko/20100101 Firefox/52.0"
 # define default headers
 
 HEAD1="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
@@ -444,8 +445,8 @@ then
    elif [ "$state" == "ranstr" ]
    then 
      # make a random string as the user agent 
-     bytes="$( expr 12 + $(head -c 2 /dev/urandom | od -A n -i) % 48 | awk '{print $1}')"
-     UA="$( head -c 2 /dev/urandom | base64 -i | cut -d "=" -f 1 | cut -d "+" -f 1 | cut -d "/" -f 1 )"
+     bytes="$( expr 12 + $(head -c 32 /dev/urandom | od -A n -i) % 48 | awk '{print $1}')"
+     UA="$( head -c "$bytes" /dev/urandom | base64 -i | cut -d "=" -f 1 | cut -d "+" -f 1 | cut -d "/" -f 1 )"
    elif [ "$state" == "tor" ] 
    then
      UA="$UA_torbrowser" 
@@ -940,7 +941,7 @@ for link in $(cat "$list" ); do
    then 
      # make a random string as the user agent 
      bytes="$( expr 12 + $(head -c 2 /dev/urandom | od -A n -i) % 48 | awk '{print $1}')"
-     UA="$( head -c 2 /dev/urandom | base64 -i | cut -d "=" -f 1 | cut -d "+" -f 1 | cut -d "/" -f 1 )"
+     UA="$( head -c "$bytes" /dev/urandom | base64 -i | cut -d "=" -f 1 | cut -d "+" -f 1 | cut -d "/" -f 1 )"
    elif [ "$state" == "tor" ] 
    then
      UA="$UA_torbrowser" 

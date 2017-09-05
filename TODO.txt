@@ -1,0 +1,55 @@
+##################################
+#  TITLE:ENDWARE TO DO LIST
+#  CREATION DATE: March 12, 2017
+#  VERSION: 0.01
+#  REVISION DATE: March 12, 2017
+#  AUTHOR: ENDWALL
+##################################
+
+proxyload.sh:
+- user requests for addition of new proxy sources posted in /os/
+
+renum.sh:
+- bug report: user claims that 1 file is lost each use of program 
+              - investigate, then repair
+-user request for the addition of a file renamer that removes pipes and spaces 
+ and replaces with underscores. Possibley generate a new tool.  
+
+xtrac-ytpl.sh
+- remove call to endget and add the equivalent full code to make self contained.
+
+endwall.sh: 
+- make a version that allows for rapid addition of VPN/VPS severs 
+through openVPN ovpn files.  Should automatically add tunnels 
+and ip addresses and allow for the correct forwarding rules in FORWARD 
+chain.
+
+- research pf rules for BSD, attempt simple firewall configurations and scripts.
+
+endloads.sh
+- update this to automatically start downloading on start ( update file)
+
+endstream.sh
+- push all stable constant streams to the front of each language pack
+- delete or renew other streams.
+
+user_agents.txt
+- review this file and add new user-agents / update
+
+endware.txt
+
+- update this file list to reflect current products. Is out of date/ missing several products.
+
+endcurl.sh
+- this file is problematic, look at this again, look at header calls, decide what to do/ fix it.
+
+endlists.sh
+endsets.sh
+- whitelisting may not be working properly behind blacklisting ( investigate rule insertion ordering )
+- testing
+
+rmdupes.sh
+- give the user the opportunity to cancle the deletion of the duplicate files after flagging.
+
+rmpac-files.sh
+- automate the deletion of the header and trailing output portion so that user doesn't have to delete these prior to use
