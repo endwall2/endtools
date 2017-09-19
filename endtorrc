@@ -165,7 +165,6 @@ ClientOnly 1
 GeoIPExcludeUnknown 1
 EnforceDistinctSubnets 1
 UseEntryGuards 1
-UseEntryGuardsAsDirGuards 1
 FetchServerDescriptors 1
 FetchHidServDescriptors 1
 FetchUselessDescriptors 1
@@ -178,13 +177,14 @@ CircuitPriorityHalflife 0
 
 #################################### DEPRECATED SWITCHES ###########################################
 
-## Flagged for deprecation in tor-2.9.2.0
+## Flagged for deprecation in recent version of tor
 # Tor2webMode 0
 # FastFirstHopPK 0
 # AllowSingleHopCircuits 0
 # ExcludeSingleHopRelays 1
 # UseNTorHandshake 1
 # ClientDNSRejectInternalAddresses 1
+# UseEntryGuardsAsDirGuards 1
 
 ################################  SECURITY SWITCHES #################################################
 ## Sandbox 0  This isn't working properly anymore ( leave this commented out )
