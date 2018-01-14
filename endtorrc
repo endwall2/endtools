@@ -2,8 +2,8 @@
 # TITLE: ENDTORRC
 # AUTHOR: THE ENDWARE DEVELOPEMENT TEAM
 # CREATION DATE: MAY 31, 2016
-# VERSION: 0.14
-# REVISION DATE: NOVEMBER 26, 2016
+# VERSION: 0.15
+# REVISION DATE: JANUARY 12, 2018
 # COPYRIGHT: THE ENDWARE DEVELOPEMENT TEAM, 2016
 #
 # DESCRIPTION: A sample tor configuration file to use with endware
@@ -39,6 +39,7 @@
 #
 #  # torsocks wget https://github.com/endwall2/endware/raw/master/endtorrc 
 #  # mv endtorrc torrc-defaults
+#  # cp gepoip geoip6 /usr/local/share/tor/
 #  # systemctl restart tor
 #  or
 #  # rc-service tor stop 
@@ -177,7 +178,7 @@ CircuitPriorityHalflife 0
 
 #################################### DEPRECATED SWITCHES ###########################################
 
-## Flagged for deprecation in recent version of tor
+## Flagged for deprecation
 # Tor2webMode 0
 # FastFirstHopPK 0
 # AllowSingleHopCircuits 0
@@ -185,9 +186,10 @@ CircuitPriorityHalflife 0
 # UseNTorHandshake 1
 # ClientDNSRejectInternalAddresses 1
 # UseEntryGuardsAsDirGuards 1
+# CircuitIdleTimeout 60
 
 ################################  SECURITY SWITCHES #################################################
-## Sandbox 0  This isn't working properly anymore ( leave this commented out )
+## Sandbox 0  This doesn't work properly anymore 
 ## Comment out to use transparent proxying/plugable transports 
 StrictNodes 1
 ## Comment out or set to 0 if connection problems to hidden services
@@ -216,7 +218,6 @@ NumDirectoryGuards 400
 GuardLifetime 1 month
 
 KeepalivePeriod 60
-CircuitIdleTimeout 60
 CircuitBuildTimeout 30
 CircuitStreamTimeout 60
 
@@ -227,6 +228,9 @@ PathsNeededToBuildCircuits 0.75
 ####################################################################################################
 #                                    NODE PATH SELECTION
 ####################################################################################################
+#  To use Country codes be sure to copy the files geoip and geoip6 into the directory /usr/local/share/tor/
+#  cp geoip geoip6 /usr/local/share/tor/
+#
 
 #######################  CURRENT SETTING  ###########################################
 ## NINE EYES Exclusion
