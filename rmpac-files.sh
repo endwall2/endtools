@@ -1,5 +1,5 @@
 #!/bin/sh
-######################################################################################################
+###############################################################################################
 #  TITLE: rmpac-files.sh
 #  TYPE: BOURNE SHELL SCRIPT
 #  DESCRIPTION: Removes files that exist already in filesystem that cause pacman errors
@@ -7,40 +7,27 @@
 #  AUTHOR:  THE ENDWARE DEVELOPMENT TEAM
 #  COPYRIGHT: 2016, THE ENDWARE DEVELOPMENT TEAM
 #  CREATION DATE:  AUGUST 03, 2016
-#  VERSION:  0.02
-#  REVISION DATE:  DECEMBER 19, 2016
-#####################################################################################################  
+#  VERSION:  0.03
+#  REVISION DATE:  JANUARY 27, 2018
+###############################################################################################  
 #  CHANGE LOG:  
+#  - Automatically remove the header and operate on files
 #  - Add license and acknowledgements
 #  - File creation
 #
-#####################################################################################################
-#  DEPENDENCIES: pacman, rm, sort, awk
-#####################################################################################################
-#  WARNING: THE USE OF THIS FILE MAY HOSE YOUR SYSTEM and require rescue using the installation disk 
-#           PROCEED WITH CAUTION!
-######################################################################################################
+###############################################################################################
+#  DEPENDENCIES: pacman, rm, sort, awk, grep , expr, head, tail
+################################################################################################
 #  INSTRUCTIONS:
-#  Sometimes during a pacman -Syu update there will be an error that says :
-# 
-#  vim: /usr/bin/vim exists in filesystem
-#
-#  Which will disallow any further update until the files are removed. 
-#  To solve this problem do the following: 
 #
 #  STEP 1) Get the errors from pacman into a text file
-#  $ pacman -Su 1>& error.txt
-#  STEP 2) Edit error.txt to remove non-file lines from the error message
-#  $ nano error.txt
-#  STEP 3) Remove these files 
 #  $ su
+#  # pacman -Su 1>& error.txt
+#  STEP 2) Remove these files
 #  # rmpac-files error.txt
 #  # pacman -Su
 #  # exit
-######################################################################################################
-#  WARNING: THE USE OF THIS FILE MAY HOSE YOUR SYSTEM and require rescue using the installation disk 
-#           PROCEED WITH CAUTION!
-######################################################################################################
+#################################################################################################
 #############################################################################################################################################################################
 #                                         ACKNOWLEDGMENTS
 #############################################################################################################################################################################
@@ -150,17 +137,80 @@
 #       and it will be taken into consideration.  
 #################################################################################################################################################################################
 ##############################  BEGINING OF PROGRAM #############################################
+###############  VERSION INFORMATION  ##############
+version="0.03"
+rev_date="27/01/2018"
+branch="gnu/linux"
+product="RMPAC-FILES"
+current_year="2018"
+####################################################
+for arg in $@
+do 
+ if [ "$arg" == "--help" ]
+ then
+   echo "RMPAC-FILES: Remove files that cause conflicts with pacman"
+   echo "             due to the files already existing in the file system"
+   echo "USAGE:"
+   echo "$ rmpac-files --help         # usage messages"
+   echo "$ rmpac-files --version      # print version information"
+   echo "$ rmpac-files error.txt      # process the files in error.txt for deletion"
+   shift
+   exit 0
+   elif [ "$arg" == "--version" ]
+   then
+   echo "ENDSTREAM: version: "$version", branch: "$branch" , revision date: "$rev_date" " 
+   echo "Copyright: The Endware Development Team, 2016-"$current_year" "
+   shift
+   exit 0
+  fi
+done
+
 input=$1
 
-list=rmpac_list.txt
+name_list=input_list.txt
+file_list=rmpac_list.txt  
 
-awk '{print $2}' "$input" | sort -u > "$list"
+# get the line number where the conflict files start
+l_start=$(grep -n "file conflicts" $input | cut -d : -f 1 )
+# get the line number of the end of file
+l_end=$(grep -n "Errors occurred" $input | cut -d: -f 1)
 
-for x in $(cat "$list"); do
+# take the difference to get the number of files +1 
+num_lines=$(expr "$l_end" - "$l_start")
 
-rm -rf "$x"
+# extract the file paths from the error file into a new text file
+tail -n "$num_lines" "$input" | head -n "$( expr "$num_lines" - 1 )"  >> "$name_list"
 
-done
+# extract only the file paths into a new list
+awk '{print $2}' "$name_list" | sort -u > "$file_list"
+
+# for loop to remove the files
+
+echo "Files are prepared for deletion would you like to continue? Enter Y to proceed or another key to stop:"
+read response
+
+echo "$response"
+
+if [ "$response" == "Y" ]
+then
+echo "Deleting Files"
+
+	for x in $(cat "$file_list")
+	do
+		rm -rf "$x"
+        	echo "$x" " Deleted"
+	done
+
+rm "$name_list"
+rm "$file_list"
+
+echo "The files have been removed, try pacman -Su again !"
+
+else
+
+echo "Please review and remove the files "$file_list" and "$name_list" and try again!"
+
+fi
 
 exit 0
 
