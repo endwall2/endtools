@@ -6,8 +6,8 @@
 # AUTHOR: ENDWALL
 # COPYRIGHT: THE ENDWARE DEVELOPMENT TEAM, 2018
 # CREATION DATE: MARCH 23, 2018
-# VERSION: 0.02
-# REVISION DATE: APRIL 1, 2018
+# VERSION: 0.03
+# REVISION DATE: APRIL 4, 2018
 ######################################################################################
 # Description: Dateloop is a simple clock that calls the function date in a while loop for
 #              10,000 iterations. Updates every 5 seconds,  Stop with CNTRL + C .
@@ -138,7 +138,8 @@
 
 locate=""
 line_buffer=5
-########### UPDATE INTERVAL
+loop_limit=10000
+########### UPDATE INTERVAL in seconds
 interval=5
 
 
@@ -160,12 +161,12 @@ loop_counter=0
 while [ "$input" != "q" ]
 do
 loop_counter=0
-    while [ "$loop_counter" -lt "10000" ]
+    while [ "$loop_counter" -lt "$loop_limit" ]
     do
     clear
     counter=0
 
-   ########## LINE BUFFER ABOVE ##############
+   ########## LINE BUFFER ABOVE OUTPUT ##############
       while [ "$counter" -lt "$line_buffer" ]
       do
       echo " "
@@ -175,7 +176,7 @@ loop_counter=0
     #### OUTPUT THE DATE AND TIME
     echo "$locate $(date)"
     
-    ### TIMER INTERVAL UPDATE PERIOD set to 10 seconds
+    ### TIMER INTERVAL UPDATE PERIOD set to $interval seconds
     sleep "$interval"
     counter=$( expr "$loop_counter" + 1 )
     done
@@ -185,8 +186,8 @@ read input
 
 done 
  
-echo "type date_loop to restart program"
+echo "type dateloop to restart program"
 
-exit 0
+exit "$?"
 
 ##########################################################  END OF PROGRAM  ###################################################################
